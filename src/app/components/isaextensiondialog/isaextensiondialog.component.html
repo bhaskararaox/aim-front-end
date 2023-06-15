@@ -1,0 +1,33 @@
+<div id="divIsaExtensionDialog" class="container-fluid details-dialog">
+  <div class="row details-header">
+    <div class="col-sm-6">
+      <span class="contentTitle">ISA Extensions summary:</span>
+    </div>
+    <div class="col-sm-6">
+      <button (click)="dialog.close()" class="btn btn-danger close-button">Close Window</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row details-content">
+    <div class="nav nav-pills nav-stacked col-sm-6">
+      <span class="contentSubTitle">ISA extensions distribution</span>
+      <p-dataTable [value]="isaData" class="ui-g-12" columnResizeMode="fit">
+        <p-column field="Workload" header="Workload"></p-column>
+        <p-column field="Component" header="Component" *ngIf="hasComponent"></p-column>
+        <p-column field="IsaExtension" header="ISA"></p-column>
+        <p-column field="UnweightedPercentage" header="Unweighted %" styleClass="centerText" *ngIf="!isWeighted"></p-column>
+        <p-column field="WeightedPercentage" header="Weighted %" styleClass="centerText" *ngIf="isWeighted"></p-column>
+      </p-dataTable>
+    </div>
+
+    <div class="nav nav-pills nav-stacked col-sm-6">
+      <span class="contentSubTitle">{{title}}</span>
+      <br>
+      <div *ngIf="dataTableReady">
+        <app-charts [data]="summaryData" [config]="configSummary" [elementId]="elementIdSummary"></app-charts>
+        <!--Div that will hold the pie chart-->
+        <div id="isaPieChart"></div>
+      </div>
+    </div>
+  </div>
+</div>

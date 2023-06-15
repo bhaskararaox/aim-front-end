@@ -1,0 +1,42 @@
+<div id="divComponentDialog" class="container-fluid details-dialog">
+  <div class="row details-header">
+    <div class="col-sm-6">
+      <span class="contentTitle">Workload components summary:</span>
+    </div>
+    <div class="col-sm-6">
+      <button (click)="dialog.close()" class="btn btn-danger close-button">Close Window</button>
+    </div>
+
+  </div>
+  <hr>
+  <div class="row details-content col-sm-12">
+    <div *ngIf="dataTableReady" class="nav nav-pills nav-stacked col-sm-8">
+      <span class="contentSubTitle">Workload components table</span>
+      <br>
+      <p-dataTable [value]="componentData" class="ui-g-12">
+        <p-column field="Workload" header="Workload"></p-column>
+        <p-column field="NumComponents" header="# of components" styleClass="centerText"></p-column>
+        <p-column field="Component" header="Component"></p-column>
+        <p-column field="NumTraces" header="# of traces" styleClass="centerText"></p-column>
+        <p-column field="goldTraces" header="Gold" styleClass="centerText"></p-column>
+        <p-column field="silverTraces" header="Silver" styleClass="centerText"></p-column>
+        <p-column field="bronzeTraces" header="Bronze" styleClass="centerText"></p-column>
+        <p-column field="segment" header="Segment" styleClass="centerText breaktext"></p-column>
+
+      </p-dataTable>
+    </div>
+
+    <div class="nav nav-pills nav-stacked col-sm-4">
+      <div>
+        <span class="contentSubTitle">Top 15 workload components chart</span>
+        <br>
+        <div *ngIf="dataTableReady">
+          <app-charts [data]="summaryData" [config]="configSummary" [elementId]="elementIdSummary"></app-charts>
+          <!--Div that will hold the pie chart-->
+          <div id="componentModelPieChart"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

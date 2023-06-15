@@ -1,0 +1,39 @@
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.error-page.error-500{
+  background: transparent url('../../../assets/images/error-page-bkg.png') no-repeat center center /cover !important;
+}
+
+.error-page.error-401{
+  background: transparent url('../../../assets/images/notauth-page-bkg.png') no-repeat center center /cover !important;
+}
+
+.error-page h1{
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.error-page h4{
+  font-size: 22px;
+}
+
+.error-page .text-container{
+  margin-top: 125px;
+}
+
+.error-page a{
+  font-weight: bold;
+}
+
+.error-page{
+  color: whitesmoke;
+  height: 100%;
+}
+.error-page li{
+  margin-top: 10px;
+  margin-left: 25px;
+}

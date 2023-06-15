@@ -1,0 +1,496 @@
+<div id="divHelp" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-9 col-sm-offset-1">
+    <h3 class="contentTitle">
+      Frequently Asked Questions
+    </h3>
+    <p-accordion [multiple]="true">
+      <p-accordionTab header="What is AIM-PACT tool?" [selected]="true">
+        AIM-PACT or Architecture Insights Model - Platform Analysis Center tool is a very powerful, user friendly Trace data search using Big Data and Machine learning.<br>
+        User can make custom queries using the search box build query.
+      </p-accordionTab>
+      <p-accordionTab header="Who can access the tool?">
+        Access to the tool is restricted and can be requested through AGS.
+        <ul>
+          <li><a href="https://ags.intel.com/identityiq/ui/rest/redirect?rp1=/accessRequest/accessRequest.jsf&rp2=accessRequest/manageAccess/add?filterKeyword=BI%20Big%20Data%20-%20Hadoop%20-%20End%20Users%20-%20Production%20-%20Architectural%20Insights%20Model%20-%20PACT%20Read-only" target="_blank">Go to AGS</a></li>
+          <li>Select the access "BI Big Data - Hadoop - End Users - Production - Architectural Insights Model - PACT Read only".</li>
+          <li>Click on "Step 3: Provide Justification".</li>
+          <li>Add the required justification and click "Save".</li>
+          <li>Click "Send".</li>
+        </ul>
+        Once your request is approved, you will receive an email and you are ready to use AIM-PACT.<br>
+        The very first time you access AIM-PACT tool, you will need to accept the terms for a Privacy & Legal notice.
+      </p-accordionTab>
+      <p-accordionTab header="How to become admin user of the tool?">
+        You must already have the regular user permission to use the tool (instructions in the previous question).<br>
+        Administrator access allows searching by non-published information and can be requested through AGS.
+        <ul>
+          <li><a href="https://ags.intel.com/identityiq/ui/rest/redirect?rp1=/accessRequest/accessRequest.jsf&rp2=accessRequest/manageAccess/add?filterKeyword=AIM-PACT%20-%20Production%20-%20Admin%20User" target="_blank">Go to AGS</a></li>
+          <li>Search and select the access "AIM-PACT - Production - Admin User".</li>
+          <li>Click on "Step 3: Provide Justification", add the required justification and click "Save".</li>
+          <li>Click "Send".</li>
+        </ul>
+        You will receive an email once your request to be an admin user is approved.
+      </p-accordionTab>
+      <p-accordionTab header="How to use AIM-PACT tool?">
+        See the short video on how to use this tool:<br><br>
+        <div class="container-fluid video">
+            <video src="assets/tool_usage.mp4" class="toolVideo" controls></video>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="How do I download search results in EXCEL?">
+        Click on "Export SearchResults" button. It will download "search_result.txt" file in your Downloads folder.<br>
+        To open it in excel use only semicolon ";" as the delimiter.
+      </p-accordionTab>
+      <p-accordionTab header="How do I generate tracelist for search results?">
+        Use Export Trace List button. "trace.tlist" file will be downloaded in your Downloads folder.
+      </p-accordionTab>
+      <p-accordionTab header="How to report bugs/queries/new features?">
+        <a href="https://hsdes.intel.com/appstore/article/#/tracing.sighting/create?component_affected=INFRASTRUCTURE.tool.trace_analytics&owner=hrnavale" target="_blank">Go to HSD</a>
+      </p-accordionTab>
+      <p-accordionTab header="How do I raise issues on GTR trace sets?">
+        <a href="https://hsdes.intel.com/appstore/article/#/tracing.sighting/create?component_affected=INFRASTRUCTURE.tool.trace_analytics&owner=hrnavale" target="_blank">Go to HSD</a>
+      </p-accordionTab>
+      <p-accordionTab header="What are the source descriptions and search criteria?">
+        <div class="table-responsive">
+        <table class="sourcesTable">
+          <tr>
+            <th>Field</th>
+            <th>Description</th>
+            <th>Search Criteria</th>
+          </tr>
+          <tr>
+            <td>Trace</td>
+            <td>Trace name</td>
+            <td>For cpu2006 traces: <br> Trace contains "cpu2006"</td>
+          </tr>
+          <tr>
+            <td>Date</td>
+            <td>Published date</td>
+            <td>For traces in 2017: <br> Date >= 01/01/2017 && Date < 01/01/2018</td>
+          </tr>
+          <tr>
+            <td>ISA</td>
+            <td>ISA distribution of trace disasm (xed tool output of disasm) <br> Example Output:
+              <table class="innerTable">
+                <tr>
+                  <td>SSE2</td>
+                  <td>91.227075</td>
+                </tr>
+                <tr>
+                  <td>BASE</td>
+                  <td>7.872962</td>
+                </tr>
+              </table>
+            </td>
+            <td>For traces containing AVX instructions: <br> ISA contains “AVX”</td>
+          </tr>
+          <tr>
+            <td>Instruction</td>
+            <td>Instructions in the trace (frequency of occurrence) <br> Example Output:
+              <table class="innerTable">
+                <tr>
+                  <th>Instruction</th>
+                  <th>Frequency</th>
+                  <th>Percentage</th>
+                </tr>
+                <tr>
+                  <td>MOVSD</td>
+                  <td>6628489</td>
+                  <td>39.88343%</td>
+                </tr>
+                <tr>
+                  <td>MULSD</td>
+                  <td>4328312</td>
+                  <td>26.04333%</td>
+                </tr>
+                <tr>
+                  <td>ADDSD</td>
+                  <td>4204647</td>
+                  <td>25.29924%</td>
+                </tr>
+              </table>
+            </td>
+            <td>For traces containing PHADD: <br> Instruction contains “PHADD”</td>
+          </tr>
+          <tr>
+            <td>Numbers of Threads</td>
+            <td># of threads in the trace (from arch.xml: &lt;num_cpus&gt; 8 &lt;/num_cpus&gt;)</td>
+            <td>For MT traces: <br> Numbers of Threads > 1</td>
+          </tr>
+          <tr>
+          <tr>
+            <td>Segment</td>
+            <td>Segments which the trace represents such as client, server, AI, (from Traceinfo.xml)</td>
+            <td>For traces with segment "server": <br> Segment contains “server"</td>
+          </tr>
+          <tr>
+            <td>Trace Classification</td>
+            <td>Trace Classification information from Traceinfo.xml. <br> Refer to What is trace classification? below</td>
+            <td>For "Gold" traces: <br> Trace Classification contains “gold”</td>
+          </tr>
+          <tr>
+            <td>Trace Weight</td>
+            <td>Trace Weights information from calcweights.csv</td>
+            <td>For traces with weight assigned: <br> Trace Weight > 0</td>
+          </tr>
+          <tr>
+            <td>Study List</td>
+            <td>Architecture study lists information from keiko repository</td>
+            <td>For traces in study list, "server_17Q2ww27_1T.json": <br> Study List contains “server_17Q2ww27_1T.json”</td>
+          </tr>
+          <tr>
+            <td>Trace List</td>
+            <td>Trace list information from GTR repository</td>
+            <td>For traces in "adas-or_linux64_64bit_simics_201611_ALL.tlist" trace list: <br> Trace List contains adas-or_linux64_64bit_simics_201611_ALL.tlist</td>
+          </tr>
+          <tr>
+            <td>User Instruction Ratio</td>
+            <td>User instruction ratio from Disasm <br> Example Disasm:<br>
+              Overall summary: n=29000000(100.0%), u=38809991(100.0%), l=29000256(100.0%)<br>
+              priv_level 0: n=41189(0.1%), u=71616(0.2%), l=41437(0.1%)<br>
+              priv_level 3: n=28958811(99.9%), u=38738375(99.8%), l=<b>28958819</b>(99.9%)<br><br>
+              For this trace, AIM will assume 28958819 user instructions and 41437 kernel instructions and report the corresponding ratio</td>
+            <td>For traces with User Instruction ratio > 90: <br> User Instructions Ratio > 90</td>
+          </tr>
+          <tr>
+            <td>Kernel Instruction Ratio</td>
+            <td>Kernel instruction ratio from Disasm <br> Example Output:<br>
+              Overall summary: n=29000000(100.0%), u=38809991(100.0%), l=29000256(100.0%)<br>
+                  priv_level 0: n=41189(0.1%), u=71616(0.2%), l=<b>41437</b>(0.1%)<br>
+                  priv_level 3: n=28958811(99.9%), u=38738375(99.8%), l=28958819(99.9%) <br><br>
+              For this trace, AIM will assume 28958819 user instructions and 41437 kernel instructions and report the corresponding ratio</td>
+            <td>For traces with Kernel Instruction ratio > 10: <br> Kernel Instructions Ratio > 10</td>
+          </tr>
+          <tr>
+            <td>Total Instructions</td>
+            <td>Total instruction ratio from Disasm <br> Example Output:<br>
+              Overall summary: n=29000000(100.0%), u=38809991(100.0%), l=<b>29000256</b>(100.0%)<br>
+                  			priv_level 0: n=41189(0.1%), u=71616(0.2%), l=41437(0.1%)<br>
+                  			priv_level 3: n=28958811(99.9%), u=38738375(99.8%), l=28958819(99.9%)</td>
+            <td>For traces with Total Instructions > 30Million: <br> Total Instructions > 30000000</td>
+          </tr>
+          <tr>
+            <td>Application</td>
+            <td>Application was introduced in AIM-PACT to alleviate trace naming discrepancies such as cpu2006-avx and cpu-2006-avx.
+              A search for Application contains cpu will yield all SPEC CPU traces in GTR. </td>
+            <td>For Speccpu based traces: <br> Application contains "speccpu"</td>
+          </tr>
+          <tr>
+            <td>OS</td>
+            <td>OS used for tracing is captured as part of the trace name. Where incorrect, we have tried rectifying them.</td>
+            <td>For Windows based traces: <br> OS contains “win”</td>
+          </tr>
+          <tr>
+            <td>Compiler</td>
+            <td>Compiler used for tracing is captured as part of the trace name. Where incorrect, we have tried rectifying them.</td>
+            <td>For Windows based traces: <br> Compiler contains “win”</td>
+          </tr>
+          <tr>
+            <td>Keiko Performance Metrics</td>
+            <td>From Keiko stats log (typically keiko run is for tracer configuration) <br> Metrics include
+              <ul>
+                <li>CPI: cycles/instructions</li>
+                <li>L1MPI</li>
+                <li>L2MPI</li>
+                <li>LLCMPI</li>
+              </ul>
+            </td>
+            <td>For traces with Keiko cpi > 0.5: <br> Keiko cpi > 0.5</td>
+          </tr>
+          <tr>
+            <td>Functional Metrics</td>
+            <td>Value of functional metrics from Lt_footprint log <br> Metrics include
+              <ul>
+                <li>Code Footprint (kB)</li>
+                <li>CPL Transitions</li>
+                <li>CR3 Updates</li>
+                <li>Data Footprint(kB)</li>
+                <li>IRQS</li>
+                <li>Page Faults</li>
+              </ul>
+            </td>
+            <td>For traces with Code Footprint > 10: <br> Code Footprint > 10</td>
+          </tr>
+        </table>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="What are the meanings of search operators?">
+        <div class="table-responsive">
+        <table class="sourcesTable">
+          <tr>
+            <th>Operator</th>
+            <th>Meaning and Implications</th>
+            <th>Example of Result</th>
+          </tr>
+          <tr>
+            <td>Contains</td>
+            <td>Verify that the attribute value matches the pattern of each entry value (comma separated).<br>
+              Support alphanumeric values.</td>
+            <td>For Segment Contains "client": <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Segment</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>client</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>client;segment</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>Not Contains</td>
+            <td>Verify that the attribute value does not match any entry pattern (comma separated).<br>
+              Support alphanumeric values.</td>
+            <td>For Segment Not Contains "client": <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Segment</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>media</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>graphics</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>In/Matches</td>
+            <td>Verify if the attribute value has at least one of the list of entry values (comma separated).<br>
+              Support alphanumeric values.</td>
+            <td>For Compiler In "masm-8-0, icc-avx3-20151106-lin64": <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Compiler</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>masm-8-0</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>icc-avx3-20151106-lin64</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>Not In</td>
+            <td>Verify if the attribute value is different to all of the list of entry values (comma separated).<br>
+              Support alphanumeric values.</td>
+            <td>For Compiler Not In "masm-8-0": <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Compiler</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>gcc</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>gcc-3-2-1</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>Sequence</td>
+            <td>Verify if the attribute value has all of the list of entry values (comma separated) in the order specified.<br>
+              Support alphanumeric values and is available only for Instruction attribute.</td>
+            <td>For Instruction Sequence "ADDSS,MULSS,SUBSS": <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Instruction</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>MOVL,...,ADDSS,MULSS,SUBSS</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>...,ADDSS,MULSS,SUBSS,MOVSD</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>==</td>
+            <td>Check if the attribute value is equal to the entry value.<br>
+              Only support a single value that can only be numeric or timestamp.</td>
+            <td>For Date == 2017-11-07: <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Date</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>2017-11</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>2017-11</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td> > </td>
+            <td>Check if the attribute value is greater than the entry value.<br>
+              Only support numeric and timestamp values.</td>
+            <td>For Keiko CPI > 0.573: <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Keiko CPI</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>0.588</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>5.413</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td> < </td>
+            <td>Check if the attribute value is less than the entry value.<br>
+              Only support numeric and timestamp values.</td>
+            <td>For Keiko CPI < 0.573: <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Keiko CPI</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>0.567</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>0.373</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td> >= </td>
+            <td>Check if the attribute value is greater than or equal to the entry value.<br>
+              Only support numeric and timestamp values.</td>
+            <td>For Date >= 2018-05-01: <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Date</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>2018-05</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>2018-07</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td> <= </td>
+            <td>Check if the attribute value is less than or equal to the entry value.<br>
+              Only support numeric and timestamp values.</td>
+            <td>For Date <= 2018-03-12: <br>
+              <table class="innerTable">
+                <tr>
+                  <th>Trace</th>
+                  <th>Date</th>
+                </tr>
+                <tr>
+                  <td>T1</td>
+                  <td>2018-03</td>
+                </tr>
+                <tr>
+                  <td>T2</td>
+                  <td>2016-02</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="What is Trace Quality Classification?">
+        Trace quality classification is a quality standard used to differentiate trace sets as follows:
+        <ul>
+          <li>Gold
+            <ul>
+              <li>Trace points selected based on workload characterization analysis</li>
+              <li>Fully validated - Functional(x86) and Performance (keiko/asim)</li>
+              <li>Correlated to Silicon measurements</li>
+              <li>Correlated Trace weights</li>
+              <li>Good for performance projections and architecture studies</li>
+            </ul>
+          </li>
+          <li>Silver
+            <ul>
+              <li>Trace points selected based on workload characterization analysis</li>
+              <li>Fully validated - Functional(x86) and Performance (keiko/asim)</li>
+              <li>Not correlated to Silicon measurements</li>
+              <li>Trace Weights maybe present but not correlated to the Si measurements</li>
+              <li>Good for architecture studies</li>
+            </ul>
+          </li>
+          <li>Bronze
+            <ul>
+              <li>Quick path for trace generation (Random trace offset selection)</li>
+              <li>Limited validation with functional and performance simulators</li>
+              <li>Not correlated to Silicon measurements</li>
+              <li>Trace weights not generated</li>
+              <li>Custom tracing requests (e.g. support future ISA)</li>
+            </ul>
+          </li>
+        </ul>
+      </p-accordionTab>
+      <p-accordionTab header="How are ISA and instructions obtained?">
+        For every trace, disasm file is generated using functional simulator X86. Each opcode in disasm is decoded using the standard intel tool XED (X86 Encoder Decoder) using the following command:<br>
+        xed -64 -d $opcode<br>
+        For more information regarding XED refer to following link:<br>
+        <a href="http://mjc.intel.com/xeddoc/ref-manual/html/index.html" target="_blank">http://mjc.intel.com/xeddoc/ref-manual/html/index.html</a>
+      </p-accordionTab>
+      <p-accordionTab header="How are Segment list identified?">
+        We are using the same list to identify segments out of tags currently.<br>
+        Here is the list: Server, Client, Big Data, Artificial Intelligence, Cloud, Graphics, Media, Browser, Tablet, Memory.
+      </p-accordionTab>
+      <p-accordionTab header="How often the data gets refreshed?">
+        Data gets refreshed daily twice (7am & 4pm).
+      </p-accordionTab>
+      <p-accordionTab header="Is there a command line version for this tool?">
+        Yes. As an added advantage, command line is supplied to perform basic queries directly from console using a python script.<br>
+        API tool is installed and available for use from /p/dpg/arch/perfhome/python/miniconda3/bin/<br>
+        For search instructions and usage, refer to the following github link:
+        <a href="https://github.intel.com/STO-PAC/aim-pact-api" target="_blank">https://github.intel.com/STO-PAC/aim-pact-api</a>
+      </p-accordionTab>
+    </p-accordion>
+    </div>
+    <div class="backbutton col-sm-2">
+      <a routerLink="/home" class=" btn btn-primary" role="button">Go Back to Home</a>
+    </div>
+  </div>
+</div>

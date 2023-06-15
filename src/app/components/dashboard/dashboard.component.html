@@ -1,0 +1,149 @@
+<div id="divDashboard" class="container-fluid summary noPadding">
+  <details *ngIf="summaryDetailsExists" onclick="return false" id="summaryDetails">
+    <summary class="tempSummary">
+      <button type="button" class="btn btn-success" (click)="showDashboard()">{{labelText}}</button>
+    </summary>
+    <div class="row">
+      <div class="col-sm-2 col-xs-2 noPadding">
+        <ul class="nav nav-pills nav-stacked summaryTabs">
+          <li><a data-toggle="tab"
+                 [ngClass]="{'data-toggle-link': byWorkloadController.showByWorkload}"
+                 id="byWorkload"
+                 (click)="showWorkloadSummary()">By Workload</a></li>
+          <li><a data-toggle="tab"
+                 [ngClass]="{'data-toggle-link': byClassificationController.showByClassification}"
+                 id="byClassification"
+                 (click)="showClassificationSummary()">By Classification</a></li>
+          <li><a data-toggle="tab"
+                 [ngClass]="{'data-toggle-link': bySegmentController.showBySegment}"
+                 id="bySegment"
+                 (click)="showSegmentSummary()">By Segment</a></li>
+          <li class="dropdown tab" dropdown>
+            <a class="dropdown-toggle" data-toggle="dropdown"
+               [ngClass]="{'data-toggle-link': byIsaComponentController.showByIsaComponent || byIsaWorkloadController.showByIsaWorkload}"
+               dropdownToggle>By ISA<b class="caret"></b></a>
+            <ul class="dropdown-menu" *dropdownMenu>
+              <li><a class= "dropdown-item" data-toggle="tab" [ngClass]="{'data-toggle-link': byIsaComponentController.showByIsaComponent}" (click)="showIsaByComponentSummary()">ISA by Workload/Component</a></li>
+              <li><a class= "dropdown-item" data-toggle="tab" [ngClass]="{'data-toggle-link': byIsaWorkloadController.showByIsaWorkload}" (click)="showIsaByWorkloadSummary()">ISA by Workload</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-sm-10 col-xs-10 noPadding">
+        <div class="row" [hidden]="!byWorkloadController.showByWorkload">
+          <div class="col-sm-8 mediumTable noPadding" *ngIf="byWorkloadController.dataTableReady">
+            <button type="button" (click)="byWorkloadController.downloadCSV()" class="btn btn-primary">Export Summary</button>
+            <button type="button" title="First select a Workload to graph the components" [disabled]="!graphAvailable" (click)="graphComponents()" class="btn btn-primary">Graph Components</button>
+            <br>
+            <p-treeTable selectionMode="single" (onNodeSelect)="getWorkloadFromClickEvent($event)" [(selection)]="row" [value]="byWorkloadController.data">
+              <p-header>Workload and Components visualization</p-header>
+              <p-column field="Workload" header="Workload" styleClass="col-xs-2 breaktext"></p-column>
+              <p-column field="NumComponents" header="# of components" styleClass="centerText col-xs-1 breaktext"></p-column>
+              <p-column field="Component" header="Component" styleClass="col-xs-2 breaktext"></p-column>
+              <p-column field="NumTraces" header="# of traces" styleClass="centerText col-xs-1 breaktext"></p-column>
+              <p-column field="goldTraces" header="Gold" styleClass="centerText col-xs-1 breaktext"></p-column>
+              <p-column field="silverTraces" header="Silver" styleClass="centerText col-xs-1 breaktext"></p-column>
+              <p-column field="bronzeTraces" header="Bronze" styleClass="centerText col-xs-1 breaktext"></p-column>
+              <p-column field="segment" header="Segment" styleClass="centerText col-xs-2 breaktext"></p-column>
+            </p-treeTable>
+          </div>
+
+          <div class="col-sm-4 noPadding" *ngIf="byWorkloadController.dataTableReady">
+            <div class="divTableCell">
+              <app-charts [data]="byWorkloadController.summaryData" [config]="byWorkloadController.configSummary" [elementId]="byWorkloadController.elementIdSummary"></app-charts>
+            </div>
+            <!--Div that will hold the pie chart-->
+            <div id="workloadPieChart"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-10 col-xs-10 noPadding">
+        <div class="row" [hidden]= "!byClassificationController.showByClassification">
+          <div class="col-sm-4 noPadding" *ngIf="byClassificationController.dataTableReady">
+            <p-dataTable [value]="byClassificationController.data" styleClass="tableStyle">
+              <p-column styleClass="ng-table-text-aligg-column" field="summaryField" header="Classification"></p-column>
+              <p-column styleClass="ng-table-small-column centerText" field="quantity" header="Traces"></p-column>
+            </p-dataTable>
+          </div>
+
+          <div class="col-sm-8 noPadding" *ngIf="byClassificationController.dataTableReady">
+            <div class="divTableCell">
+              <app-charts [data]="byClassificationController.summaryData" [config]="byClassificationController.configSummary" [elementId]="byClassificationController.elementIdSummary"></app-charts>
+            </div>
+            <!--Div that will hold the pie chart-->
+            <div id="classificationPieChart"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-10 col-xs-10 noPadding">
+        <div class="row" [hidden]= "!bySegmentController.showBySegment">
+          <div class="col-sm-4 noPadding" *ngIf="bySegmentController.dataTableReady">
+            <p-dataTable [value]="bySegmentController.data" styleClass="tableStyle">
+              <p-column styleClass="ng-table-medium-big-column" field="summaryField" header="Segment"></p-column>
+              <p-column styleClass="ng-table-small-column centerText" field="quantity" header="Traces"></p-column>
+            </p-dataTable>
+          </div>
+
+          <div class="col-sm-8 noPadding" *ngIf="bySegmentController.dataTableReady">
+            <div class="divTableCell">
+              <app-charts [data]="bySegmentController.summaryData" [config]="bySegmentController.configSummary" [elementId]="bySegmentController.elementIdSummary"></app-charts>
+            </div>
+            <!--Div that will hold the pie chart-->
+            <div id="segmentPieChart"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-10 col-xs-10 noPadding">
+        <div class="row" [hidden]="!byIsaComponentController.showByIsaComponent">
+          <div class="col-sm-7 bigTable" *ngIf="byIsaComponentController.dataTableReady">
+            <div class="dropdown" dropdown>
+              <button type="button" title="First select a Component to graph the ISA extensions" class="btn btn-primary dropdown-toggle" [ngClass]="{'disabled': !graphAvailable}" dropdownToggle> Graph ISA Extensions<b class="caret"></b></button>
+              <ul class="dropdown-menu" *dropdownMenu>
+                <li><a class="dropdown-item" (click)="graphIsa(true)">Weighted %</a></li>
+                <li><a class="dropdown-item" (click)="graphIsa(false)">Unweighted %</a></li>
+              </ul>
+            </div>
+            <p-treeTable selectionMode="single" (onNodeSelect)="getComponentFromClickEvent($event)" [(selection)]="row" [value]="byIsaComponentController.data">
+              <p-header>Workload, Component and ISA extensions visualization</p-header>
+              <p-column field="Workload" header="Workload"></p-column>
+              <p-column field="Component" header="Component"></p-column>
+              <p-column field="IsaExtension" header="ISA"></p-column>
+              <p-column field="WeightedPercentage" header="Weighted %" styleClass="centerText"></p-column>
+              <p-column field="UnweightedPercentage" header="Unweighted %" styleClass="centerText"></p-column>
+            </p-treeTable>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-10 col-xs-10 noPadding">
+        <div class="row" [hidden]="!byIsaWorkloadController.showByIsaWorkload">
+          <div class="col-sm-7 mediumTable" *ngIf="byIsaWorkloadController.dataTableReady">
+            <span class="inline">
+              <button type="button" (click)="byIsaWorkloadController.downloadCSV()" class="btn btn-primary">Export Summary</button>
+            </span>
+            <span class="inline">
+              <div class="dropdown" [ngClass]="{'disabled': !graphAvailable}" dropdown>
+                <button type="button" title="First select a Workload to graph the ISA extensions" class="btn btn-primary dropdown-toggle" [ngClass]="{'disabled': !graphAvailable}" dropdownToggle>Graph ISA Extensions<b class="caret"></b></button>
+                <ul class="dropdown-menu" *dropdownMenu>
+                  <li><a class="dropdown-item" (click)="graphIsa(true)">Weighted %</a></li>
+                  <li><a class="dropdown-item" (click)="graphIsa(false)">Unweighted %</a></li>
+                </ul>
+              </div>
+            </span>
+            <p-treeTable selectionMode="single" (onNodeSelect)="getWorkloadFromClickEvent($event)" [(selection)]="row" [value]="byIsaWorkloadController.data">
+              <p-header>Workload and ISA extensions visualization</p-header>
+              <p-column field="Workload" header="Workload"></p-column>
+              <p-column field="IsaExtension" header="ISA"></p-column>
+              <p-column field="WeightedPercentage" header="Weighted %" styleClass="centerText"></p-column>
+              <p-column field="UnweightedPercentage" header="Unweighted %" styleClass="centerText"></p-column>
+            </p-treeTable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+</div>

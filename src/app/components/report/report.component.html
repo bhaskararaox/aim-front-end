@@ -1,0 +1,181 @@
+<div class="container-fluid" style="padding-left: 0; padding-right: 0; height: 100%">
+  <div class="row" style="height: 100%">
+    <div class="col-md-2 side-bar-col">
+      <div class="sidebar">
+        <h3>Last 10 reports</h3>
+        <table style="border-right: 1px solid #333333; border-collapse: separate; border-spacing: 8px">
+          <tr *ngFor="let ww of listWW">
+            <td align='left'><a (click)="fillDates(ww[0], ww[1])">AIM-PACT Report for {{ww[0]}}, {{ww[1]}}</a></td>
+          </tr>
+          <td align='left'><a (click)="currentYear()">AIM-PACT Report for current year</a></td>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-10" style="margin-bottom: 45px">
+      <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+          <h2>Usage report</h2>
+        </div>
+        <div class="col-md-1">
+          <p-growl [value]="messages" [sticky]="false" [life]="5000"></p-growl>
+        </div>
+        <div class="col-md-2 col-md-offset-3">
+          <div class="backbutton">
+            <a routerLink="/home" class=" btn btn-primary" role="button">Go Back to Home</a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+          <table style="margin: 0 auto">
+            <tr>
+              <th>From</th>
+              <th>To</th>
+            </tr>
+            <tr>
+              <td>
+                <input class="form-control ng-untouched ng-pristine ng-valid" placeholder="Enter value"
+                       style="width: 200px; margin-right: 15px" [(ngModel)]="fromDate" type="date">
+              </td>
+              <td>
+                <input class="form-control ng-untouched ng-pristine ng-valid" placeholder="Enter value"
+                       style="width: 200px; margin-right: 15px" [(ngModel)]="toDate" type="date">
+              </td>
+              <td>
+                <button class="btn btn-success" ng-model="radioModel" uib-uncheckable="uncheckable"
+                        (click)="search()">Go
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 15px">
+        <div class="col-md-9" [hidden]="!showSummary">
+          <div class="row">
+            <div class="col-md-4">
+              <h4>Total Summary</h4>
+              <table>
+                <tr>
+                  <td>
+                    <table class='border'>
+                      <tr>
+                        <th>Summary</th>
+                        <th>Quantity</th>
+                      </tr>
+                      <tr>
+                        <td align='left'>Workload</td>
+                        <td align='right'>{{totalSummary.get("Workload")}}</td>
+                      </tr>
+                      <tr>
+                        <td align='left'>Component</td>
+                        <td align='right'>{{totalSummary.get("Component")}}</td>
+                      </tr>
+                      <tr>
+                        <td align='left'>Total Traces</td>
+                        <td align='right'>{{totalSummary.get("TotalTraces")}}</td>
+                      </tr>
+                    </table>
+                  </td>
+              </table>
+            </div>
+            <div class="col-md-4">
+              <h4>Distribution by Classification</h4>
+              <table>
+                <tr>
+                  <td>
+                    <table class='border'>
+                      <tr>
+                        <th>Classification</th>
+                        <th>Traces</th>
+                      </tr>
+                      <tr *ngFor="let classification of distributionClassification">
+                        <td align='left'>{{classification[0]}}</td>
+                        <td align='right'>{{classification[1]}}</td>
+                      </tr>
+                    </table>
+                  </td>
+              </table>
+            </div>
+            <div class="col-md-4">
+              <h4>Distribution by Segment</h4>
+              <table>
+                <tr>
+                  <td>
+                    <table class='border'>
+                      <tr>
+                        <th>Segment</th>
+                        <th>Traces</th>
+                      </tr>
+                      <tr *ngFor="let segment of distributionSegment">
+                        <td align='left'>{{segment[0]}}</td>
+                        <td align='right'>{{segment[1]}}</td>
+                      </tr>
+                    </table>
+                  </td>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <h4 style="margin-top: 20px">AIM-PACT Tool Usage</h4>
+              <table>
+                <tr>
+                  <td>
+                    <table class='border'>
+                      <tr>
+                        <th>Usage</th>
+                        <th>Quantity</th>
+                      </tr>
+                      <tr *ngFor="let usage of usageSummary">
+                        <td align='left'>{{usage[0]}}</td>
+                        <td align='right'>{{usage[1]}}</td>
+                      </tr>
+                    </table>
+                  </td>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <h4 style="margin-top: 20px">AIM-PACT Tool Usage by BU</h4>
+              <table>
+                <tr>
+                  <td>
+                    <table class='border'>
+                      <tr>
+                        <th>Business unit</th>
+                        <th>Quantity</th>
+                      </tr>
+                      <tr *ngFor="let usage of usageDepartments">
+                        <td align='left'>{{usage[0]}}</td>
+                        <td align='right'>{{usage[1]}}</td>
+                      </tr>
+                    </table>
+                  </td>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" [hidden]="!showSummary">
+          <h4>Distribution by Workload</h4>
+          <table>
+            <tr>
+              <td>
+                <table class='border'>
+                  <tr>
+                    <th>Workload</th>
+                    <th>Traces</th>
+                  </tr>
+                  <tr *ngFor="let workload of distributionWorkload">
+                    <td align='left'>{{workload[0]}}</td>
+                    <td align='right'>{{workload[1]}}</td>
+                  </tr>
+                </table>
+              </td>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,564 @@
+#tracesummarytable{
+  width: 60%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#tracesummarytable td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#tracesummarytable tr:nth-child(even){background-color: #f2f2f2;}
+
+#tracesummarytable tr:hover {background-color: #ddd;}
+
+#tracesummarytable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: #0073ea;
+}
+
+
+
+
+#tracesummaryjiratable{
+  width: 60%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#tracesummaryjiratable td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#tracesummaryJiratable tr:nth-child(even){background-color: #f2f2f2;}
+
+#tracesummaryjiratable tr:hover {background-color: #ddd;}
+
+#tracesummaryjiratable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: #0073ea;
+}
+
+
+#quarterlysummaryfailure{
+  width: 94.8%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#quarterlysummaryfailure td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#quarterlysummaryfailure tr:nth-child(even){background-color: #f2f2f2;}
+
+#quarterlysummaryfailure tr:hover {background-color: #ddd;}
+
+#quarterlysummaryfailure th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+
+
+#workloadsummarypercomponenttable{
+  width: 94.8%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#workloadsummarypercomponenttable td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#workloadsummarypercomponenttable tr:nth-child(even){background-color: #f2f2f2;}
+
+#workloadsummarypercomponenttable tr:hover {background-color: #ddd;}
+
+#workloadsummarypercomponenttable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+
+
+
+
+#overallSummary{
+  width: 94.8%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#overallSummary td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#overallSummary tr:nth-child(even){background-color: #f2f2f2;}
+
+#overallSummary tr:hover {background-color: #ddd;}
+
+#overallSummary th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+
+#weeklysummarypercomponenttable{
+  width: 95%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#weeklysummarypercomponenttable td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+    cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#weeklysummarypercomponenttable tr:nth-child(even){background-color: #f2f2f2;}
+
+#weeklysummarypercomponenttable tr:hover {background-color: #ddd;}
+
+#weeklysummarypercomponenttable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+
+
+
+
+
+#weeklysummarypassfail{
+  width: 60%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#weeklysummarypassfail td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#weeklysummarypassfail tr:nth-child(even){background-color: #f2f2f2;}
+
+#weeklysummarypassfail tr:hover {background-color: #ddd;}
+
+#weeklysummarypassfail th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+
+
+#workloadsummarypercentagepercomponenttable{
+  width: 94.8%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#workloadsummarypercentagepercomponenttable td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#workloadsummarypercentagepercomponenttable tr:nth-child(even){background-color: #f2f2f2;}
+
+#workloadsummarypercentagepercomponenttable tr:hover {background-color: #ddd;}
+
+#workloadsummarypercentagepercomponenttable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+
+#quarterlysummarypassfail{
+  width: 60%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#quarterlysummarypassfail td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#quarterlysummarypassfail tr:nth-child(even){background-color: #f2f2f2;}
+
+#quarterlysummarypassfail tr:hover {background-color: #ddd;}
+
+#quarterlysummarypassfail th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+
+
+
+#divtracesummary{
+  margin-top: 20px;
+  margin-left: 30px;
+  overflow-y: auto;
+  margin-bottom: 45px;
+}
+
+#divtracesummary.colWidth{
+  width: 120px;
+}
+
+#divtracesummary.viewContent {
+  white-space: normal;
+  word-break: break-word;
+}
+
+#divtracesummary .hideOverflow{
+  overflow: hidden;
+}
+
+#divtracesummary .listMargin{
+  margin-bottom:0px;
+  padding-left: 15px;
+}
+
+tr.hide-table-padding td {
+  padding: 0;
+}
+
+.expand-button {
+  position: relative;
+}
+
+.accordion-toggle .expand-button:after
+{
+  position: absolute;
+  left:.75rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  content: '-';
+}
+.accordion-toggle.collapsed .expand-button:after
+{
+  content: '+';
+}
+
+#divtracesummary .link{
+  text-decoration: underline;
+  color: #0073ea;
+}
+
+#divtracesummary .alignCenter{
+  text-align: center;
+}
+
+.tab button {
+  border: 1px solid white;
+  background-color: #EBF5FB;
+  color: black;
+  float: left;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+.tab button.active  {
+  background-color: #337ab7;
+  color: white;
+}
+
+#datewiseSummaryReport{
+  width: 60%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#datewiseSummaryReport td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#datewiseSummaryReport tr:nth-child(even){background-color: #f2f2f2;}
+
+#datewiseSummaryReport tr:hover {background-color: #ddd;}
+
+#datewiseSummaryReport th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+
+
+
+
+.expand_collapse {
+  color: #337ab7;
+  background: transparent;
+  border: none;
+}
+
+
+
+
+
+
+#datewisedetailedSummaryReport{
+  width: 60%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#datewisedetailedSummaryReport td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#datewisedetailedSummaryReport tr:nth-child(even){background-color: #f2f2f2;}
+
+#datewisedetailedSummaryReport tr:hover {background-color: #ddd;}
+
+#datewisedetailedSummaryReport th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+
+
+#datewisedetailedSummaryReport{
+  width: 60%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+#datewisedetailedSummaryReport td,  th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 10%;
+  border-collapse: collapse;
+}
+.collapsible {
+  cursor: pointer;
+  padding: 18px;
+
+  border: none;
+  text-align: left;
+  outline: none;
+
+}
+#datewisedetailedSummaryReport tr:nth-child(even){background-color: #f2f2f2;}
+
+#datewisedetailedSummaryReport tr:hover {background-color: #ddd;}
+
+#radioview td {
+  border: 1px solid #4d94ff;
+  background-color: #eeeeee;
+  padding: 8px;
+  border-collapse: collapse;
+}
+
+#datewisedetailedSummaryReport th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  color: white;
+  background-color: #4d94ff;
+  border: 1px solid white;
+}
+.quarterlyheading {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #4d94ff;
+  display: flex;
+  WIDTH: fit-content;
+  FONT-SIZE: large;
+  margin-left: 45px;
+}
+
+
+#workloadsummarypercentagepercomponenttable{
+  width: 95%;
+  border: 1px solid #ddd;
+  align-self: center;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+
+}
+
+
+

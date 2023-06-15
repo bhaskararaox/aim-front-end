@@ -1,0 +1,40 @@
+#divDashboard .summary {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+#divDashboard .summary table {
+  margin-bottom: 15px;
+}
+
+#divDashboard .summary-menu {
+  float: left;
+  display: table;
+  content: " ";
+}
+
+#divDashboard .summaryTabs{
+  margin-right: 10px;
+}
+
+#divDashboard .tableStyle{
+  table-layout: auto;
+  text-align: left;
+}
+
+#divDashboard .mediumTable{
+  min-width: 850px;
+}
+
+#divDashboard .bigTable{
+  min-width: 850px;
+}
+
+#divDashboard .inline{
+  display: inline-block;
+}
+
+#divDashboard .breaktext{
+  white-space: normal;
+  word-break: break-all;
+}

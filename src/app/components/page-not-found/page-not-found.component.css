@@ -1,0 +1,29 @@
+div#notfound-page{
+  background: transparent url('../../../assets/images/notfound-page-bkg.png') no-repeat center center /cover !important;
+  height: 100%;
+}
+
+#notfound-page h1{
+  color: whitesmoke;
+  font-size: 48px;
+  font-weight: bold;
+}
+
+#notfound-page h2{
+  color: whitesmoke;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#notfound-page h4{
+  color: whitesmoke;
+  font-size: 22px;
+}
+
+#notfound-page .text-container{
+  margin-top: 125px;
+}
+
+#notfound-page a{
+  font-weight: bold;
+}

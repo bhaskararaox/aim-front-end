@@ -1,0 +1,24 @@
+<div id="divEDPDashboard" class="container-fluid">
+  <div id="divHeader" class="row">
+    <p-panel header="Trace Data" styleClass="col-sm-10 col-sm-offset-1">
+      <strong class="col-sm-2">Trace Name:</strong> <p col-sm-9>{{selectedTrace}}</p>
+      <strong class="col-sm-2">Configuration Name: </strong><p col-sm-9>{{selectedWorkload}}</p>
+      <!--<div class="col-sm-offset-1 col-sm-2">-->
+      <!--</div>-->
+      <p-footer>
+        <!--<button id="btnBackToSearchResults" (click)="showSearchResults()" class="btn btn-primary">Back to Search Results</button>-->
+        <a id="lnkBackToSearchResults" routerLink="/home" class=" btn btn-primary" role="button">Back to Search Results</a>
+      </p-footer>
+    </p-panel>
+  </div>
+  <div *ngIf="showNestedComponents()" class="row">
+    <p-accordion class="col-sm-10 col-sm-offset-1">
+      <p-accordionTab header="Emon Metrics Summary Table" >
+        <edp-metrics-table [workload]="selectedWorkload" [trace]="selectedTrace"></edp-metrics-table>
+      </p-accordionTab>
+      <p-accordionTab header="Custom Emon Charts" [selected]="true">
+        <edp-custom-charts [workload]="selectedWorkload" [trace]="selectedTrace"></edp-custom-charts>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+</div>

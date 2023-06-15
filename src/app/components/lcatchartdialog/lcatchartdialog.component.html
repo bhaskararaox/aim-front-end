@@ -1,0 +1,16 @@
+<div id="divLcatChartDialog" class="container-fluid details-dialog">
+  <div class="row details-header">
+    <div class="col-sm-6">
+      <span class="contentTitle">Impact of LCAT on CPI</span>
+    </div>
+    <div class="col-sm-6">
+      <button (click)="dialog.close()" class="btn btn-danger close-button">Close Window</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row lcat-details-content">
+    <div class="lcat-chart" id="lcatcpichart">
+        <app-googlecharts [data]="chartData" [config]="chartConfig" [elementId]="chartElementId" [chartSelection]="chartConfig.chartType"></app-googlecharts>
+    </div>
+  </div>
+</div>

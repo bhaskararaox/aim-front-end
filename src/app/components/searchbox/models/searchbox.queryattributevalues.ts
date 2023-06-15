@@ -1,0 +1,35 @@
+export class QueryAttributeValues {
+  public static readonly TRACE_NAME: string = "trace";
+  public static readonly ISA_SET: string = "isaset";
+  public static readonly ISA_PERCENTAGE: string = "isaPercentage";
+  public static readonly CATEGORY: string = "category";
+  public static readonly IFORM: string = "iform";
+  public static readonly ISA: string = "isa";
+  public static readonly INSTRUCTION: string = "instruction";
+  public static readonly CLASSIFICATION: string = "classification";
+  public static readonly DATE: string = "date";
+  public static readonly CYCLES_WEIGHT: string = "cyclesWeight";
+  public static readonly INSTRUCTION_WEIGHT: string = "instructionWeight";
+  public static readonly PATH_LENGTH: string = "pathlength";
+  public static readonly SEGMENT: string = "segment";
+  public static readonly TAGS: string = "tags";
+  public static readonly STUDY_LIST: string = "study_list";
+  public static readonly TRACE_LIST: string = "trace_list";
+  public static readonly NUM_CPUS: string = "num_cpus";
+  public static readonly APPLICATION: string = "application";
+  public static readonly USER_PERCENT: string = "user_percent";
+  public static readonly KERNEL_PERCENT: string = "kernel_percent";
+  public static readonly TOTAL_INSTRUCTIONS: string = "total_instructions";
+  public static readonly OPERATION_SYSTEM: string = "operating_system";
+  public static readonly COMPILER: string = "compiler";
+  public static readonly INVALID_FIELDS: string = "invalidfields";
+  public static readonly IS_PUBLISHED: string = "ispublished";
+  public static readonly IS_PREPRODUCTION: string = "ispreproduction";
+  public static readonly EMON_EDP: string = "edp_emon";
+  public static readonly IS_CR3_SHARED_AMONG_THREADS: string = "iscr3sharedamongthreads";
+  public static readonly CR3_SHARED_DATA: string = "cr3shareddata";
+  public static readonly HAS_LOCK_INSTRUCTIONS: string = "haslockinstructions";
+  public static readonly LOCK_INSTRUCTIONS: string = "lockinstructions";
+  public static readonly LCAT_IMPACT: string = "lcatimpact";
+  public static readonly LCAT_DATA: string = "lcatdata";
+}

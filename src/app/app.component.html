@@ -1,0 +1,14 @@
+<div id="page" class="page">
+  <app-header></app-header>
+  <p-growl [value]="messages" life="9000"></p-growl>
+  <router-outlet></router-outlet>
+
+  <p-blockUI [blocked]="showLoading">
+    <img src="assets/images/loading.gif" id="spinImage"/>
+    <!--<img *ngIf="checkPoohLoading() ? false : true" src="assets/images/loading.gif" id="spinImage"/>
+    <img *ngIf="!checkPoohLoading() ? false : true" src="assets/images/pooh.gif" id="spinImage2"/>-->
+  </p-blockUI>
+
+  <!--<div class="footer row"> Intel Top Secret </div>-->
+</div>
+

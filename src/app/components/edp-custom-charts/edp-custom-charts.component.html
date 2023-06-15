@@ -1,0 +1,48 @@
+<section id="secEDPCustomCharts">
+  <div class="row">
+    <form>
+      <div class="form-row">
+        <div class="form-group col-sm-2">
+          <label for="inputCharts">Chart Type</label>
+          <p-dropdown [options]="chartsTypes" [(ngModel)]="selectedChartType" (onChange)="onCharTypesChange($event)" styleClass="full_width" id="inputCharts" name="inputCharts"></p-dropdown>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="inputMetrics">Metrics</label>
+          <p-multiSelect *ngIf="!trendLineSelected" [options]="metrics" [(ngModel)]="selectedMetric" styleClass="full_width" id="inputMetrics" name="inputMetrics"></p-multiSelect>
+          <p-dropdown *ngIf="trendLineSelected" [options]="trendLineMetrics" [(ngModel)]="selectedTrendLineMetric" styleClass="full_width" id="inputTrendlineMetrics" name="inputMetrics"></p-dropdown>
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="inputCores">Cores</label>
+          <p-dropdown [options]="cores" [(ngModel)]="selectedCore" styleClass="full_width" id="inputCores" name="inputCores"></p-dropdown>
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="inputSockets">Sockets</label>
+          <p-dropdown [options]="sockets" [(ngModel)]="selectedSocket" styleClass="full_width" id="inputSockets" name="inputSockets"></p-dropdown>
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="inputPackages">Packages</label>
+          <p-dropdown [options]="packages" [(ngModel)]="selectedPackage" styleClass="full_width" id="inputPackages" name="inputPackages"></p-dropdown>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <button (click)="addChart()" class="btn btn-success" [disabled]="!hasDataForPlotting()">Add Chart</button>
+      <button (click)="deleteCharts()" class="btn btn-danger" [disabled]="!hasSomeCharts()">Delete Charts</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="row edp-chart-container" *ngFor="let chart of chartList; let i = index">
+      <div class="col-sm-offset-2 col-sm-8 edp-chart" id="{{'divChartPanel' + i }}">
+        <app-googlecharts [data]="chart.data" [config]="chart.config" [elementId]="chart.elementId" [chartSelection]="chart.config.chartType">
+        </app-googlecharts>
+      </div>
+      <button (click)="removeChart(i)" class="btn remove-icon">
+      </button>
+    </div>
+
+  </div>
+
+</section>

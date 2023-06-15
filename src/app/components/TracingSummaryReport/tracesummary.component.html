@@ -1,0 +1,755 @@
+<!--<div  style="background-color: yellow;color: black;margin-bottom: 10px;line-height: 0px;margin-top: 1%">
+  <i class='fa fa-warning' style='font-size:28px;color:black; margin-left: 35%;margin-right: 10px;'></i> <b style="font-size: 14px;"> Page Under Construction</b><i class='fas fa-tools' style='font-size:48px;color:white'></i>
+  <i class='fa fa-warning' style='font-size:28px;color:black; margin-left: 10px;margin-right: 20%;'></i>
+</div>-->
+<div class="tab" style="width: auto;display: flex;margin-top: 25px;margin-left: 3%">
+  <button class="tablinks" [hidden]="this.isDatewiseReportViewable" (click)="this.setViewFlagDatewiseReport()">Datewise Report</button>
+  <button class="active"  [hidden]="!this.isDatewiseReportViewable" >Datewise Report</button>
+  <button class="tablinks"  [hidden]="this.isTraceSummaryViewable" (click)="this.setViewFlagTraceSummaryReport()">Trace Summary Report</button>
+  <button class="active"  [hidden]="!this.isTraceSummaryViewable" >Trace Summary Report</button>
+
+ <!-- <button class="tablinks" >Tokyo</button>-->
+  <div class="col-md-2 col-md-offset-3" style="width: max-content;margin-left: 62%">
+    <div class="backbutton">
+      <a routerLink="/home" class=" btn btn-primary" role="button">
+        <i class="fa fa-home fa-2x"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid noPadding" [hidden]="!isDatewiseReportViewable" style="margin-top: 40px;margin-bottom: 50px;">
+  <form ngNativeValidate id="ReportForm">
+  <div class="col-md-4 col-md-offset-2" style="width: 100%;margin-left: 10px;margin-top: 10px;margin-bottom: 20px;">
+    <table style="width: 20%;margin-left: 30%;">
+      <tr>
+        <th>From</th>
+        <th>To</th>
+      </tr>
+
+      <tr>
+        <td>
+         <!-- <input type="date" id="fromDate" name="datemax" max="this.todaysdate"><br><br>-->
+
+                <input type="date"  class="form-control ng-untouched ng-pristine ng-valid" placeholder="Enter value"
+                 [(ngModel)]="this.fromDate" name="fromDate" required
+                 max="{{fromDate != undefined ? this.fromDate : this.todaysDate | date: 'yyyy-MM-dd'}}">
+           </td>
+        <td>
+           <input type="date" class="form-control ng-untouched ng-pristine ng-valid" placeholder="Enter value" name="toDate"
+                 [(ngModel)]="this.toDate" required
+                 min="{{this.fromDate  != undefined ? this.fromDate : this.todaysDate | date: 'yyyy-MM-dd'}}"
+                  max="{{this.todaysDate| date: 'yyyy-MM-dd'}}"
+                  >
+          </td>
+
+        <td>
+          <button class="btn btn-success" ng-model="radioModel" uib-uncheckable="uncheckable"
+                  (click)="this.search(null,null)">Go
+          </button>
+        </td>
+      <tr>
+
+
+   </table>
+    <div style="margin-left: 40px;margin-top: 15px;" [hidden]="this.datewiseSummaryComponentList.length == 0">
+
+      <table id="radioview" style="border: 1px solid #4d94ff">
+        <tr>
+          <td>
+            <input [(ngModel)]="this.dateDataView" [ngModelOptions]="{standalone: true}"
+                   [hidden]="this.datewiseSummaryComponentList.length == 0" type="radio"
+                   value="condensedview" (click)="this.viewCondensedDatewiseReport()"  style="margin-left: 10px;">
+            <label for="condensedView"  style="margin-right: 5px">Condensed View</label><br>
+          </td>
+          <td>
+            <input [(ngModel)]="this.dateDataView" [ngModelOptions]="{standalone: true}"
+                   [hidden]="this.datewiseSummaryComponentList.length == 0" type="radio"
+                   value="detailedview" (click)="viewDetailedDatewiseReport()" style="margin-left: 10px;">
+            <label for="detailedview" style="margin-right: 5px" >Detailed View</label><br>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  </form>
+  <h2 *ngIf="this.isQuartelyDatewiseView"  class="quarterlyheading"> Last Quarter Report &nbsp;(From&nbsp; <b>{{this.start.getDate()}}-{{this.start.getMonth() + 1}}-{{this.start.getFullYear()}}</b>
+    &nbsp;to&nbsp; <b>{{this.end.getDate()}}-{{this.end.getMonth() + 1}}-{{this.end.getFullYear()}}</b>)
+  </h2>
+
+
+  <table [hidden]="!this.isCondensedDateReport || this.condensedReport.length == 0" id="datewiseSummaryReport"
+         style="border: 1px solid white;margin-left: 20px;min-width: 60%;">
+
+    <tr>
+      <th [colSpan]="1"></th>
+      <th [colSpan]="8">Quality</th>
+      <th [colSpan]="9">Accuracy</th>
+    </tr>
+    <tr>
+      <th [colSpan]="1"></th>
+      <th [colSpan]="3">Trace Summary</th>
+      <th [colSpan]="5">Failure Breakdown</th>
+      <th [colSpan]="2">Cluster Coverage</th>
+      <th [colSpan]="3">Metric Bin Coverage <br> (Arch_Study)</th>
+      <th [colSpan]="3">Metric Bin Coverage <br> (Proj_Study)</th>
+
+    </tr>
+    <tr>
+      <th>Workload</th>
+      <th>Total</th>
+      <th>Pass (x86 + Keiko)</th>
+      <th>Fail</th>
+      <th>LCAT</th>
+      <th>TDFDECODE</th>
+      <th>LITSIM</th>
+      <th>KEIKO</th>
+	  <th>X86</th>
+      <th>Arch_Study</th>
+      <th>Proj_Study</th>
+      <th>CPI</th>
+      <th>MPI</th>
+      <th>Branches</th>
+      <th>CPI</th>
+      <th>MPI</th>
+      <th>Branches</th>
+      <!--<th>CPI</th>-->
+    </tr>
+      <tr>
+
+      <th style="text-align: left;" colspan="17">
+        <input  [hidden]="!this.isCondensedDateReport || this.condensedReport.length == 0" type="text" id="searchInput"
+                (keyup)="this.searchInTable()" placeholder="Search workload here" style="color: black;margin-left: 0px;width: 40%">
+      </th>
+
+    </tr>
+    <ng-container *ngFor="let component of this.condensedReport ">
+      <tr >
+        <td>{{ component.componentName }}</td>
+        <td>{{ component.passKeikoX86 +  component.failCount }}</td>
+        <td>{{ component.passKeikoX86 }}</td>
+        <td>{{ component.failCount }}</td>
+        <td>{{ component.lcatFail}}</td>
+        <td>{{ component.tdfdecodeFail }}</td>
+        <td>{{ component.litsimFail }}</td>
+        <td>{{ component.keikoFail }}</td>
+        <td>{{ component.x86Fail }}</td>
+        <td>
+          <div *ngIf="component.archStudy !== 0">
+            {{ component.archStudy}}%
+          </div>
+        </td>
+        <td>
+          <div *ngIf="component.projStudy !== 0">
+            {{ component.projStudy }}%
+          </div>
+        </td>
+        <td>
+          <div *ngIf="component.cpiArchBinCoverage !== 0">
+            {{ component.cpiArchBinCoverage }}%
+          </div>
+        </td>
+        <td>
+          <div *ngIf="component.cpiArchBinCoverage !== 0">
+            {{ component.mpiArchBinCoverage }}%
+          </div>
+        </td>
+        <td>
+          <div *ngIf="component.branchesArchCoverage !== 0">
+            {{ component.branchesArchCoverage }}%
+          </div>
+        </td>
+        <td>
+          <div *ngIf="component.cpiProjBinCoverage !== 0">
+            {{ component.cpiProjBinCoverage }}%
+          </div></td>
+        <td>
+          <div *ngIf="component.mpiProjBinCoverage !== 0">
+            {{ component.mpiProjBinCoverage }}%
+          </div>
+        </td>
+        <td>
+          <div *ngIf="component.branchesProjCoverage !== 0">
+            {{ component.branchesProjCoverage }}%
+          </div>
+        </td>
+        <!--<td>{{ component.cpiCoverage }}%</td>-->
+      </tr>
+    </ng-container>
+  </table>
+    <table [hidden]="!this.isDetailedDateReport || this.datewiseSummaryComponentList.length == 0" id="datewisedetailedSummaryReport" style="border: 1px solid white;margin-top: 20px;margin-left: 15px;">
+      <tr>
+        <th [colSpan]="2">Date</th>
+        <th [colSpan]="3">Total</th>
+        <th [colSpan]="23">Failure Count</th>
+      </tr>
+      <tr>
+        <th>StartDate</th>
+        <th>EndDate</th>
+        <th>Traces</th>
+        <th>Pass</th>
+        <th>Fail</th>
+        <th>Others</th>
+        <th>QT-X86-TRIM</th>
+        <th>LITSIM</th>
+        <th>DDR3PARSER</th>
+        <th>QT-X86NOAS</th>
+        <th>KEIKO</th>
+        <th>QT-SATASIM-LCAT</th>
+        <th>LCAT</th>
+        <th>COMPILER</th>
+        <th>X86</th>
+        <th>TDFDECODE</th>
+        <th>READER</th>
+        <th>PARSER</th>
+        <th>SYMPROF</th>
+        <th>PTDUMP</th>
+        <th>TRIM</th>
+        <th>DISASM-STAT</th>
+        <th>RSIM</th>
+        <th>ASIM</th>
+        <th>LTFTP</th>
+        <th>JSON</th>
+        <th>XED</th>
+        <th>Non-pipeline</th>
+      </tr>
+      <ng-container *ngFor="let component of this.datewiseSummaryComponentList">
+        <tr >
+          <td>{{component.startdate}}</td>
+          <td >{{ component.enddate }}</td>
+          <td>{{ component.totalTraces }}</td>
+          <td>{{ component.totalPassing }}</td>
+          <td>{{ component.totalFailing }}</td>
+          <td>{{ component.totalOthers }}</td>
+          <td>{{ component.qtx86TrimFailed }}</td>
+          <td>{{ component.litsimFailed }}</td>
+          <td>{{ component.ddr3ParserFailed }}</td>
+          <td>{{ component.qtx86noasFailed }}</td>
+          <td>{{ component.keikoFailed }}</td>
+          <td>{{ component.qtStatsimLcatFailed }}</td>
+          <td>{{ component.lcatFailed}}</td>
+          <td>{{ component.compilerFailed }}</td>
+          <td>{{ component.x86Failed }}</td>
+          <td>{{ component.tdfdecodeFailed }}</td>
+          <td>{{ component.readerFailed }}</td>
+          <td>{{ component.parserFailed }}</td>
+          <td>{{ component.symprofFailed }}</td>
+          <td>{{ component.ptdumpFailed }}</td>
+          <td>{{ component.trimFailed }}</td>
+          <td>{{ component.disasmstatFailed }}</td>
+          <td>{{ component.rsimFailed }}</td>
+          <td>{{ component.asimFailed }}</td>
+          <td>{{ component.ltftpFailed }}</td>
+          <td>{{ component.jsonFailed }}</td>
+          <td>{{ component.xedFailed }}</td>
+          <td>{{ component.nonpipelineFailure }}</td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+
+<div id="divtracesummary" class="container-fluid noPadding" style="width: auto;" [hidden]="!isTraceSummaryViewable">
+  <div class="row" style="margin-top: 25px;">
+  <div class="col-md-4 col-md-offset-2" style="margin-bottom: 25px;">
+    <h2 style="display: inline;margin-right: 10px;">Trace Summary Report</h2>
+    <button (click)="this.refreshTraceSummaryReport()" type="button" class="btn btn-info" style="width: auto;background-color: #337ab7 ;
+    color: white;">
+      Refresh Data&nbsp;
+        <i class="fa fa-refresh"></i></button>
+</div>
+  <div  *ngIf="hsdSightings!=null" style="margin-top: 15px;" >
+    <button (click)="this.isHsdView=!this.isHsdView" type="button" class="btn btn-info" style="width: 60%;background-color: #EBF5FB ;
+    color: black;">
+      HSDs ARs and Sighting (Last 2 Quarters)
+      <i [hidden]="!this.isHsdView" class="fa fa-angle-double-down"></i>
+      <i [hidden]="this.isHsdView" class="fa fa-angle-double-up"></i>
+    </button>
+    <table id="tracesummarytable" [hidden]="this.isHsdView">
+      <tr>
+       <th>Sightings Reported</th>
+        <th>Sightings Resolved</th>
+        <th>Tracing ARs Closed</th>
+      </tr>
+      <tr><td>
+      <div class="alignCenter">
+              <p>{{this.hsdSightings.bugsReported}}</p>
+            </div>
+      </td>
+      <td>
+        <div class="alignCenter">
+          <p>{{this.hsdSightings.bugsResolved}}</p>
+        </div>
+      </td>
+      <td>
+        <div class="alignCenter">
+          <p>{{this.hsdSightings.traceRequests}}</p>
+        </div>
+      </td>
+      </tr>
+     </table>
+    </div>
+
+    <div  *ngIf="this.jiraConsolidation!=null" style="margin-top: 15px;" >
+      <button (click)="this.isJiraView=!this.isJiraView" type="button" class="btn btn-info" style="width: 60%;background-color: #EBF5FB ;
+    color: black;">
+        JIRA Consolidation
+        <i [hidden]="!this.isJiraView" class="fa fa-angle-double-down"></i>
+        <i [hidden]="this.isJiraView" class="fa fa-angle-double-up"></i>
+      </button>
+      <table id="tracesummaryjiratable" [hidden]="this.isJiraView">
+       <tr>
+          <th>Trace Requests Received</th>
+          <th>Trace Requests Completed</th>
+          <th>PBT Requests Received</th>
+          <th>PBT Requests Completed</th>
+        </tr>
+        <tr><td>
+          <div class="alignCenter">
+            <p>{{this.jiraConsolidation.tracingRequestsReceived}}</p>
+          </div>
+        </td>
+          <td>
+            <div class="alignCenter">
+              <p>{{this.jiraConsolidation.tracingRequestCompleted}}</p>
+            </div>
+          </td>
+          <td>
+            <div class="alignCenter">
+              <p>{{this.jiraConsolidation.pbtrequestReceived}}</p>
+            </div>
+          </td>
+          <td>
+            <div class="alignCenter">
+              <p>{{this.jiraConsolidation.pbtRequestCompleted}}</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+
+
+    <div  *ngIf="this.workloadSummaryPerComponentList.length > 0" style="margin-top: 20px;min-width: 63.5%;max-width:max-content">
+      <button (click)="this.isWorkloadSummaryPerComponent=!this.isWorkloadSummaryPerComponent"
+              type="button" class="btn btn-info" style="width: 94.8%;background-color: #EBF5FB ;
+    color: black;">
+        Workload Summary (Last 3 Months)&nbsp;&nbsp;
+        <i [hidden]="!this.isWorkloadSummaryPerComponent" class="fa fa-angle-double-down"></i>
+        <i [hidden]="this.isWorkloadSummaryPerComponent" class="fa fa-angle-double-up"></i>
+      </button>
+      <table id="workloadsummarypercomponenttable" [hidden]="this.isWorkloadSummaryPerComponent">
+        <tr>
+          <th [colSpan]="4"></th>
+          <th [colSpan]="13">Fail Count</th>
+        </tr>
+        <tr>
+          <th>Workload</th>
+          <th>Total Traces</th>
+          <th>Fail</th>
+          <th>Pass</th>
+          <th>Processing</th>
+          <th>ASIM</th>
+          <th>COMPILER</th>
+          <th>DISASM-STAT</th>
+          <th>JSON</th>
+          <th>KEIKO</th>
+          <th>LCAT</th>
+          <th>LITSIM</th>
+          <th>LTFTP</th>
+          <th>READER</th>
+          <th>RSIM</th>
+          <th>TDFDECODE</th>
+          <th>X86</th>
+        </tr>
+
+
+        <ng-container *ngFor="let component of this.workloadSummaryPerComponentList">
+          <tr >
+            <td>{{component.workload }}</td>
+            <td>{{component.totalTraces }}</td>
+            <td >{{ component.fail }}</td>
+            <td>{{component.pass }}</td>
+            <td >{{ component.processing }}</td>
+            <td>{{component.fail_asim }}</td>
+            <td >{{ component.fail_compiler }}</td>
+            <td>{{component.fail_disasmstat }}</td>
+            <td >{{ component.fail_json }}</td>
+            <td>{{component.fail_keiko }}</td>
+            <td >{{ component.fail_lcat }}</td>
+            <td>{{component.fail_litsim }}</td>
+            <td >{{ component.fail_ltftp }}</td>
+            <td>{{component.fail_reader }}</td>
+            <td >{{ component.fail_rsim }}</td>
+            <td>{{component.fail_tdfdecode }}</td>
+            <td >{{ component.fail_x86 }}</td>
+            </tr>
+
+          </ng-container>
+      </table>
+    </div>
+
+   <div  *ngIf="this.workloadSummaryPerentagePerComponentList.length > 0" style="margin-top: 20px;min-width: 63.5%;max-width:max-content">
+      <button (click)="this.isWorkloadSummaryPercentagePerComponent=!this.isWorkloadSummaryPercentagePerComponent"
+              type="button" class="btn btn-info" style="width: 94.8%;background-color: #EBF5FB ;
+    color: black;">
+        Workload Summary %(Last 3 Months)&nbsp;&nbsp;
+        <i [hidden]="!this.isWorkloadSummaryPercentagePerComponent" class="fa fa-angle-double-down"></i>
+        <i [hidden]="this.isWorkloadSummaryPercentagePerComponent" class="fa fa-angle-double-up"></i>
+      </button>
+      <table id="workloadsummarypercentagepercomponenttable" [hidden]="this.isWorkloadSummaryPercentagePerComponent">
+        <tr>
+          <th [colSpan]="4"></th>
+          <th [colSpan]="13">Fail Summary</th>
+        </tr>
+        <tr>
+          <th>Workload</th>
+          <th>Total Traces</th>
+          <th>Pass</th>
+          <th>Fail</th>
+          <th>Processing</th>
+          <th>ASIM</th>
+          <th>COMPILER</th>
+          <th>DISASM-STAT</th>
+          <th>JSON</th>
+          <th>KEIKO</th>
+          <th>LCAT</th>
+          <th>LITSIM</th>
+          <th>LTFTP</th>
+          <th>READER</th>
+          <th>RSIM</th>
+          <th>TDFDECODE</th>
+          <th>X86</th>
+        </tr>
+
+
+        <ng-container *ngFor="let component of this.workloadSummaryPerentagePerComponentList">
+          <tr >
+            <td>{{component.workload }}</td>
+            <td>{{component.totalTraces }}</td>
+            <td >
+              <div *ngIf="component.pass >= 0">{{ component.pass }}%</div>
+              <div *ngIf="component.pass === NAN">0%</div>
+            </td>
+            <td>
+              <div *ngIf="component.fail >= 0">{{component.fail }}%</div>
+              <div *ngIf="component.fail === NAN">0%</div>
+            </td>
+            <td ><div *ngIf="component.processing >= 0">{{ component.processing }}%</div>
+              <div *ngIf="component.processing === NAN">0%</div>
+            </td>
+            <td><div *ngIf="component.fail_asim >= 0">{{component.fail_asim }}%</div>
+              <div *ngIf="component.fail_asim === NAN">0%</div>
+            </td>
+            <td >
+              <div *ngIf="component.fail_compiler >= 0">{{ component.fail_compiler }}%</div>
+              <div *ngIf="component.fail_compiler === NAN">0%</div>
+            </td>
+            <td><div *ngIf="component.fail_disasmstat >= 0">{{component.fail_disasmstat }}%</div>
+              <div *ngIf="component.fail_disasmstat === NAN">0%</div>
+            </td>
+            <td >
+              <div *ngIf="component.fail_json >= 0">{{ component.fail_json }}%</div>
+              <div *ngIf="component.fail_json === NAN">0%</div>
+            </td>
+            <td>
+              <div *ngIf="component.fail_keiko >= 0">{{component.fail_keiko }}%</div>
+              <div *ngIf="component.fail_keiko === NAN">0%</div>
+             </td>
+            <td >
+              <div *ngIf="component.fail_lcat >= 0">{{ component.fail_lcat }}%</div>
+              <div *ngIf="component.fail_lcat === NAN">0%</div>
+            </td>
+            <td>
+              <div *ngIf="component.fail_litsim >= 0">{{component.fail_litsim }}%</div>
+              <div *ngIf="component.fail_litsim === NAN">0%</div>
+            </td>
+            <td >
+              <div *ngIf="component.fail_ltftp >= 0">{{ component.fail_ltftp }}%</div>
+              <div *ngIf="component.fail_ltftp === NAN">0%</div>
+            </td>
+            <td>
+              <div *ngIf="component.fail_reader >= 0">{{component.fail_reader }}%</div>
+              <div *ngIf="component.fail_reader === NAN">0%</div>
+            </td>
+            <td >
+              <div *ngIf="component.fail_rsim >= 0">{{ component.fail_rsim }}%</div>
+              <div *ngIf="component.fail_rsim === NAN">0%</div>
+            </td>
+            <td>
+              <div *ngIf="component.fail_tdfdecode >= 0">{{component.fail_tdfdecode }}%</div>
+              <div *ngIf="component.fail_tdfdecode === NAN">0%</div>
+            </td>
+            <td>
+              <div *ngIf="component.fail_x86 >= 0">{{ component.fail_x86 }}%</div>
+              <div *ngIf="component.fail_x86 === NAN">0%</div>
+            </td>
+          </tr>
+
+        </ng-container>
+      </table>
+    </div>
+
+    <div  *ngIf="this.weeklySummaryPerComponentList.length > 0" style="margin-top: 20px;min-width: 63.5%;max-width:max-content">
+      <button (click)="this.isWeeklySummaryPerComponent=!this.isWeeklySummaryPerComponent" type="button"
+              class="btn btn-info" style="width: 94.6%;background-color: #EBF5FB ;
+    color: black;">
+        Per Component Summary &nbsp;&nbsp;
+        <i [hidden]="!this.isWeeklySummaryPerComponent" class="fa fa-angle-double-down"></i>
+        <i [hidden]="this.isWeeklySummaryPerComponent" class="fa fa-angle-double-up"></i>
+      </button>
+      <table id="weeklysummarypercomponenttable" [hidden]="this.isWeeklySummaryPerComponent">
+        <tr>
+          <th [colSpan]="2"></th>
+          <th [colSpan]="14">Failure Summary</th>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <th>Pass</th>
+          <th>Fail</th>
+          <th>Processing</th>
+          <th>ASIM</th>
+          <th>COMPILER</th>
+          <th>DISASM_STAT</th>
+          <th>JSON</th>
+          <th>KEIKO</th>
+          <th>LCAT</th>
+          <th>LITSIM</th>
+          <th>LTFTP</th>
+          <th>READER</th>
+          <th>RSIM</th>
+          <th>TDFDECODE</th>
+          <th>X86</th>
+        </tr>
+        <ng-container *ngFor="let component of this.groupsweeklySummary">
+          <tr *ngIf="component.componentSpan>0" style="background-color: #f2f2f2;">
+            <td [colSpan]="16"><button (click)="this.collapseContent(component.workload)" style="border: none;background: transparent;outline: none">
+              <i class="fa fa-plus-circle expand_collapse"  id="collapse_{{component.workload}}" [hidden]="true"></i> <i id="expand_{{component.workloadComponent}}"class="fa fa-minus-circle expand_collapse" aria-hidden="true" ></i></button>{{ component.workloadComponent }}</td>
+          </tr>
+          <tr id="{{component.workload}}" style="background-color: #ffffff">
+            <td>{{component.date }}</td>
+            <td >{{ component.pass }}</td>
+            <td >{{ component.fail }}</td>
+            <td >{{ component.processing }}</td>
+            <td>{{component.fail_asim }}</td>
+            <td >{{ component.fail_compiler }}</td>
+            <td>{{component.fail_disasmstat }}</td>
+            <td >{{ component.fail_json }}</td>
+            <td>{{component.fail_keiko }}</td>
+            <td >{{ component.fail_lcat }}</td>
+            <td>{{component.fail_litsim }}</td>
+            <td >{{ component.fail_ltftp }}</td>
+            <td>{{component.fail_reader }}</td>
+            <td >{{ component.fail_rsim }}</td>
+            <td>{{component.fail_tdfdecode }}</td>
+            <td >{{ component.fail_x86 }}</td>
+          </tr>
+        </ng-container>
+
+      </table>
+    </div>
+
+
+    <div  *ngIf="this.weeklyComponentPassFailList.length > 0" style="margin-top: 20px;">
+      <button (click)="this.isWeeklyComponentPassFail=!this.isWeeklyComponentPassFail" type="button"
+              class="btn btn-info" style="width: 60%;background-color: #EBF5FB ;
+    color: black;">
+        Weekly Component : #Fail, #Pass &nbsp;&nbsp;
+        <i [hidden]="!this.isWeeklyComponentPassFail" class="fa fa-angle-double-down"></i>
+        <i [hidden]="this.isWeeklyComponentPassFail" class="fa fa-angle-double-up"></i>
+      </button>
+      <table id="weeklysummarypassfail" [hidden]="this.isWeeklyComponentPassFail">
+        <tr>
+          <th>Date</th>
+          <th>Fail</th>
+          <th>Pass</th>
+        </tr>
+        <ng-container *ngFor="let component of this.weeklyComponentPassFailList">
+          <tr >
+            <td>{{component.weeklyComponentDate }}</td>
+            <td >{{ component.weeklyComponentFail }}</td>
+            <td>{{ component.weeklyComponentPass }}</td>
+
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+      <div  *ngIf="this.quarterlyPassFailSummaryList.length > 0" style="margin-top: 20px;">
+        <button (click)="this.isQuarterlyPassFailSummary=!this.isQuarterlyPassFailSummary" type="button"
+                class="btn btn-info" style="width: 60%;background-color: #EBF5FB ;
+    color: black;">
+          Quarterly Summary: #Fail, #Pass &nbsp;&nbsp;
+          <i [hidden]="!this.isQuarterlyPassFailSummary" class="fa fa-angle-double-down"></i>
+          <i [hidden]="this.isQuarterlyPassFailSummary" class="fa fa-angle-double-up"></i>
+        </button>
+        <table id="quarterlysummarypassfail" [hidden]="this.isQuarterlyPassFailSummary">
+          <tr>
+            <th>Quarter</th>
+            <th>Fail</th>
+            <th>Pass</th>
+            <th>Processing</th>
+          </tr>
+          <ng-container *ngFor="let component of this.quarterlyPassFailSummaryList">
+            <tr >
+              <td>{{component.quarter }}</td>
+              <td >{{ component.fail }}</td>
+              <td>{{ component.pass }}</td>
+              <td>{{ component.processig }}</td>
+            </tr>
+          </ng-container>
+        </table>
+  </div>
+
+    <div  *ngIf="this.quarterlyFailureSummaryList.length > 0" style="margin-top: 20px;min-width: 63.5%;display: inline-table" >
+      <button (click)="this.isQuarterlyFailureSummary=!this.isQuarterlyFailureSummary" type="button"
+              class="btn btn-info" style="width:94.8%;background-color: #EBF5FB ;
+    color: black;">
+        Quarterly Summary: #Failure breakdown &nbsp;&nbsp;
+        <i [hidden]="!this.isQuarterlyFailureSummary" class="fa fa-angle-double-down"></i>
+        <i [hidden]="this.isQuarterlyFailureSummary" class="fa fa-angle-double-up"></i>
+      </button>
+      <table id="quarterlysummaryfailure" [hidden]="this.isQuarterlyFailureSummary">
+        <tr>
+          <th>Quarter</th>
+          <th>ASIM</th>
+          <th>COMPILER</th>
+          <th>DISASM-STAT</th>
+          <th>JSON</th>
+          <th>KEIKO</th>
+          <th>LCAT</th>
+          <th>LITSIM</th>
+          <th>LTFTP</th>
+          <th>READER</th>
+          <th>RSIM</th>
+          <th>TDFDECODE</th>
+          <th>X86</th>
+        </tr>
+        <ng-container *ngFor="let component of this.quarterlyFailureSummaryList">
+          <tr >
+            <td>{{component.quarter }}</td>
+            <td >{{ component.fail_asim }}</td>
+            <td>{{ component.fail_compiler }}</td>
+            <td>{{component.fail_disasmstat }}</td>
+            <td >{{ component.fail_json }}</td>
+            <td>{{ component.fail_keiko }}</td>
+            <td>{{component.fail_lcat }}</td>
+            <td >{{ component.fail_litsim }}</td>
+            <td>{{ component.fail_ltftp }}</td>
+            <td>{{component.fail_reader }}</td>
+            <td >{{ component.fail_rsim }}</td>
+            <td>{{ component.fail_tdfdecode }}</td>
+            <td>{{ component.fail_x86 }}</td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+
+    <div  *ngIf="this.overallSummaryPerComponentList.length > 0" style="margin-top: 20px;min-width: 63.5%;max-width:max-content">
+      <button (click)="this.isOverAllSummary=!this.isOverAllSummary" type="button"
+              class="btn btn-info" style="width: 94.6%;background-color: #EBF5FB ;
+    color: black;">
+        Per Component Summary &nbsp;&nbsp;
+        <i [hidden]="!this.isQuarterlyPassFailSummary" class="fa fa-angle-double-down"></i>
+        <i [hidden]="this.isQuarterlyPassFailSummary" class="fa fa-angle-double-up"></i>
+      </button>
+      <table id="overallSummary" [hidden]="this.isOverAllSummary">
+        <tr>
+          <th [colSpan]="2"></th>
+          <th [colSpan]="13">Failure Summary</th>
+        </tr>
+        <tr>
+          <th>Component</th>
+          <th>Workload</th>
+          <th>Pass</th>
+          <th>ASIM</th>
+          <th>COMPILER</th>
+          <th>DISASM_STAT</th>
+          <th>JSON</th>
+          <th>KEIKO</th>
+          <th>LCAT</th>
+          <th>LITSIM</th>
+          <th>LTFTP</th>
+          <th>READER</th>
+          <th>RSIM</th>
+          <th>TDFDECODE</th>
+          <th>X86</th>
+        </tr>
+        <ng-container *ngFor="let component of groups">
+        <tr *ngIf="component.componentSpan>0" style="background-color: #f2f2f2;">
+          <td [colSpan]="15"><button (click)="this.collapseContent(component.workloadComponent)" style="border: none;background: transparent;outline: none">
+            <i class="fa fa-plus-circle expand_collapse"  id="collapse_{{component.workloadComponent}}" [hidden]="true"></i> <i id="expand_{{component.workloadComponent}}"class="fa fa-minus-circle expand_collapse" aria-hidden="true" ></i></button>{{ component.workloadComponent }}</td>
+        </tr>
+          <tr id="{{component.workloadComponent}}" style="background-color: #ffffff">
+            <td ></td>
+
+          <td>{{component.workload }}</td>
+            <td >{{ component.pass }}</td>
+            <td>{{component.fail_asim }}</td>
+            <td >{{ component.fail_compiler }}</td>
+            <td>{{component.fail_disasmstat }}</td>
+            <td >{{ component.fail_json }}</td>
+            <td>{{component.fail_keiko }}</td>
+            <td >{{ component.fail_lcat }}</td>
+            <td>{{component.fail_litsim }}</td>
+            <td >{{ component.fail_ltftp }}</td>
+            <td>{{component.fail_reader }}</td>
+            <td >{{ component.fail_rsim }}</td>
+            <td>{{component.fail_tdfdecode }}</td>
+            <td >{{ component.fail_x86 }}</td>
+          </tr>
+         </ng-container>
+
+      </table>
+    </div>
+  </div>
+
+<!--      <div  *ngIf="this.overallSummaryPerComponentList.length > 0" style="margin-top: 20px;min-width: 63.5%;max-width:max-content">
+        <button (click)="this.isOverAllSummary=!this.isOverAllSummary" type="button"
+                class="btn btn-info" style="width: 94.6%;background-color: #EBF5FB ;
+    color: black;">
+          Per Component Summary &nbsp;&nbsp;
+          <i [hidden]="!this.isQuarterlyPassFailSummary" class="fa fa-angle-double-down"></i>
+          <i [hidden]="this.isQuarterlyPassFailSummary" class="fa fa-angle-double-up"></i>
+        </button>
+        <table id="overallSummary" [hidden]="this.isOverAllSummary">
+          <tr>
+            <th [colSpan]="2"></th>
+            <th [colSpan]="12">Failure Summary</th>
+          </tr>
+            <tr>
+            <th>Workload</th>
+            <th>Pass</th>
+            <th>ASIM</th>
+            <th>COMPILER</th>
+            <th>DISASM_STAT</th>
+            <th>JSON</th>
+            <th>KEIKO</th>
+            <th>LCAT</th>
+            <th>LITSIM</th>
+            <th>LTFTP</th>
+            <th>READER</th>
+            <th>RSIM</th>
+            <th>TDFDECODE</th>
+            <th>X86</th>
+          </tr>
+          <ng-container *ngFor="let component of this.overallSummaryPerComponentList">
+            <tr >
+              <td>{{component.workload }}</td>
+              <td >{{ component.pass }}</td>
+              <td>{{component.fail_asim }}</td>
+              <td >{{ component.fail_compiler }}</td>
+              <td>{{component.fail_disasmstat }}</td>
+              <td >{{ component.fail_json }}</td>
+              <td>{{component.fail_keiko }}</td>
+              <td >{{ component.fail_lcat }}</td>
+              <td>{{component.fail_litsim }}</td>
+              <td >{{ component.fail_ltftp }}</td>
+              <td>{{component.fail_reader }}</td>
+              <td >{{ component.fail_rsim }}</td>
+              <td>{{component.fail_tdfdecode }}</td>
+              <td >{{ component.fail_x86 }}</td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+</div>-->
+</div>

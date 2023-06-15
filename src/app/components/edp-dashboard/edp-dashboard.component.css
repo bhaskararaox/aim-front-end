@@ -1,0 +1,12 @@
+#divEDPDashboard #divHeader{
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#divEDPDashboard p-accordion{
+  padding: 0;
+}
+
+#divEDPDashboard #lnkBackToSearchResults{
+  color: #fff !important;
+}

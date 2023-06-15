@@ -1,0 +1,126 @@
+.ui-autocomplete{
+  max-width: 600px;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+  border: #cedceb;
+  color: black;
+  background: #cedceb;
+  /*background: #186ba0;
+  color: white;*/
+}
+
+.ui-autocomplete-multiple-container.ui-inputtext {
+  overflow-x: auto;
+}
+
+.ui-autocomplete-multiple-container{
+  display: block;
+  overflow-x: auto;
+  min-height: 34px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background: #fff none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  min-width: 300px; max-width: 100%;
+  padding: 6px 12px 5px;
+}
+
+.ui-autocomplete-token{
+  min-height: 25px; padding-top: 5px; vertical-align: middle; margin-top: 5px;
+}
+
+p-autoComplete{ width: 420px; }
+p-autoComplete input { width: 390px; }
+
+.ui-autocomplete-items {
+  width: 400px;
+  z-index: 2012;
+  overflow:auto;
+}
+
+.ui-autocomplete{
+  width: 400px;
+  margin-top: 0px;
+}
+
+.btn-query-builder{
+  background-color: transparent;
+  color: #204d74;
+  border-color: #204d74;
+  height: 24px;
+  width: 24px;
+  padding: 0px 0px;
+  font-size: 8px
+}
+.btn-query-builder:hover {
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74;
+}
+
+.query-toggle-link{
+  font-weight: bold;
+}
+
+.shifted-dropdown {
+  left: -135px !important;
+}
+
+.condition-not-used{
+  background-color: transparent;
+  border-radius: 4px;
+  color: #204d74;
+  border: 1px solid #204d74;
+  height: 32px;
+  width: 24px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+  font-weight: bold;
+}
+
+.condition-used{
+  background-color: #204d74;
+  color: white;
+}
+
+#searchBox input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.ui-multiselect-items-wrapper {
+  min-width: 420px;
+  color: #555;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.ui-multiselect.error {
+  border-color:red;
+}
+
+.ui-multiselect {
+  min-width: 420px;
+  color: #555;
+  font-size: 14px;
+}
+
+.ui-autocomplete-multiple-container.error {
+  border-color:red;
+}
+
+.form-control.error{
+  border-color:red;
+}
+
+#searchBox .remove-icon{
+  cursor: pointer;
+}

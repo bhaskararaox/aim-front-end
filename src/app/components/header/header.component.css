@@ -1,0 +1,110 @@
+#divHeader{
+  padding: 0px;
+  max-height: 70px;
+  height: auto;
+}
+
+#divHeader .header {
+  font-family: "Intel Clear", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #003C71;
+  color: white;
+  padding: 3px;
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+@media (min-width:1200px) {
+  #divHeader .appTitle{
+    font-weight: bold;
+    font-size: xx-large;
+  }
+  #divHeader .appTitle.center{
+    font-weight: bold;
+    font-size: xx-large;
+    text-align: center;
+  }
+  #divHeader .version, #divHeader .headerLink{
+    font-size: 15px;
+    text-align: center;
+  }
+  #divHeader .dataDate{
+    font-size: 14px;
+  }
+}
+
+@media (max-width:1200px) {
+  #divHeader .appTitle{
+    font-weight: bold;
+    font-size: x-large;
+  }
+  #divHeader .appTitle.center{
+    font-weight: bold;
+    font-size: x-large;
+    text-align: center;
+  }
+  #divHeader .version, #divHeader .headerLink{
+    font-size: 14px;
+    text-align: center;
+  }
+  #divHeader .dataDate{
+    font-size: 13px;
+  }
+}
+
+#divHeader .headerLink a{
+  text-decoration: underline;
+  color: white;
+}
+
+#divHeader .logoContainer {
+  min-width: 60px;
+  min-height: 50px;
+  float: left;
+}
+
+#divHeader .logoImg{
+  width: 100%;
+  height: 100%;
+  float: left;
+}
+
+#divHeader .selectbutton {
+  margin-top: 20px;
+  text-align: center;
+}
+#divHeader p-selectbutton span.ui-button-text{
+  padding: 4px 7px;
+}
+
+#divHeader p-selectbutton div:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#divHeader p-selectbutton div:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#divHeader p-selectbutton div.ui-state-active {
+  background-color: #5cb85c !important;
+  border-color: #4cae4c !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+#divHeader p-selectbutton div.ui-state-active:hover {
+  background-color: #57ad57 !important;
+}
+
+#divHeader p-selectbutton div.ui-state-default {
+  background: #c0c0c0 none;
+  border-color: #777;
+  color: #777;
+  font-weight: normal;
+}
+
+#divHeader p-selectbutton div.ui-state-default:hover {
+  background-color: #bcbcbc;
+}

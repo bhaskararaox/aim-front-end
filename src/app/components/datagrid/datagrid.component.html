@@ -1,0 +1,653 @@
+<div id="divDatagrid" class="container-fluid noPadding">
+  <div class="row">
+    <python-api-exporter class="pythonExporter" [aimpactQuery]="executedQuery" [availableFields]="fields">
+    </python-api-exporter>
+  </div>
+  <div class="row">
+    <p-confirmDialog></p-confirmDialog>
+  </div>
+  <div *ngIf="searchResultsProvider.isDataEmailed">
+    <b>You will receive the search results via email. Please check your inbox shortly.</b>
+ </div>
+   <div >
+  <div class="row dataTable">
+    <p-dataTable #dt [value]="searchResultsProvider.data" [(selection)]="selectedResult" [rows]="20" [paginator]="true" [hidden]="searchResultsProvider.isDataEmailed"
+                 (onRowSelect)="onTraceSelected($event)"
+                 [pageLinks]="3" [rowsPerPageOptions]="[10,20,30,40,50,3000]" reorderableColumns="true"
+                 scrolling="false" [contextMenu]="cm"
+                 selectionMode="single" [totalRecords]="searchResultsProvider.searchCurrentRecords" [lazy]="true"
+                 (onLazyLoad)="loadSearchLazy($event)">
+
+      <div>
+        <p-column styleClass="ng-table-medium-column" field="workload" header="Workload" [filter]="true" filterMatchMode="contains" [sortable]="true">
+          <ng-template let-row="rowData" pTemplate type="body" #addLink>
+            <div class="alignCenter" *ngIf="row.hsdLink === 0">
+              <p *ngIf="row.workload == '' || row.workload == '-' || row.workload === null">&lt;not available&gt;</p>
+              <p *ngIf="row.workload !== '' && row.workload !== '-' && row.workload !== null">{{row.workload}}</p>
+            </div>
+            <div class="alignCenter" *ngIf="row.hsdLink !== 0">
+              <a class="link" href="{{row.HSD}}" target="_blank"> {{row.workload}}</a>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div>
+        <p-column styleClass="ng-table-medium-column" field="component" header="Component" [filter]="true"
+                  filterMatchMode="contains" [sortable]="true">
+          <ng-template let-row="rowData" pTemplate type="body">
+            <div class="alignLeft" *ngIf="row.component == '' || row.component == '-' || row.component == null">
+              <p>&lt;not available&gt;</p>
+            </div>
+            <div class="alignLeft" *ngIf="row.component !== '' && row.component !== '-' && row.component !== null">
+              <p>{{row.component}}</p>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div>
+        <p-column styleClass="ng-table-big-column" field="traceName" header="Trace Name" [filter]="true"
+                  filterMatchMode="contains" [sortable]="true">
+          <ng-template let-row="rowData" pTemplate type="body">
+            <div class="alignLeft" *ngIf="row.traceName == '' || row.traceName == '-' || row.traceName == null">
+              <p>&lt;not available&gt;</p>
+            </div>
+            <div class="alignLeft" *ngIf="row.traceName !== '' && row.traceName !== '-' && row.traceName !== null">
+              <p>{{row.traceName}}</p>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div>
+        <p-column *ngIf="showColumn('classification')" styleClass="colWidth" field="classification"
+                  header="Classification" [filter]="true" filterMatchMode="contains" [sortable]="true">
+          <ng-template let-row="rowData" pTemplate type="body">
+            <div class="alignLeft"
+                 *ngIf="row.classification === '' || row.classification === '-' || row.classification === null || row.classification ==='null'">
+              <p>&lt;not available&gt;</p>
+            </div>
+
+            <div class="alignLeft"
+                 *ngIf="row.classification !== '' && row.classification !== '-' && row.classification !== null && row.classification !=='null'">
+              <p>{{row.classification}}</p>
+            </div>
+
+          </ng-template>
+
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('date')">
+        <p-column styleClass="ng-table-small-column" field="date" header="Date" [sortable]="true">
+          <ng-template let-row="rowData" pTemplate type="body">
+            <div class="alignLeft"
+                 *ngIf="row.date == '' || row.date == '-' || row.date == null">
+              <p>&lt;Not available&gt;</p>
+            </div>
+            <div class="alignLeft"
+                 *ngIf="row.date !== '' && row.date !== '-' && row.date !== null">
+              <p>{{row.date}}</p>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('isa')">
+        <p-column styleClass="ng-table-medium-big-column" field="isa" header="ISA" [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <details class="hideOverflow">
+              <summary  *ngIf="result.isaSummary === ''"><span>&lt;not available&gt;</span></summary>
+              <summary  *ngIf="result.isaSummary != ''"><span>{{result.isaSummary}}...</span></summary>
+              <table>
+                <tr *ngFor="let row of result.isaTable">
+                  <td>{{row.name}}</td>
+                  <td>{{row.value}}</td>
+                </tr>
+              </table>
+            </details>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('isaPercentage')">
+        <p-column styleClass="ng-table-medium-column" field="isaPercentage" header="ISA Percentage"
+                  [sortable]="true">
+
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('iform')">
+        <p-column styleClass="ng-table-medium-big-column" field="iform" header="IFORM" [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <details class="hideOverflow">
+              <summary  *ngIf="result.iformSummary === ''"><span>&lt;not available&gt;</span></summary>
+              <summary *ngIf="result.iformSummary != ''"><span>{{result.iformSummary}}...</span></summary>
+
+
+              <table>
+                <tr *ngFor="let row of result.iformTable">
+                  <td>{{row.name}}</td>
+                  <td>{{row.value}}</td>
+                </tr>
+              </table>
+            </details>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('category')">
+        <p-column styleClass="ng-table-medium-big-column" field="category" header="CATEGORY" [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <details class="hideOverflow">
+              <summary  *ngIf="result.categorySummary === ''"><span>&lt;not available&gt;</span></summary>
+              <summary *ngIf="result.categorySummary != ''"><span>{{result.categorySummary}}...</span></summary>
+              <table>
+                <tr *ngFor="let row of result.categoryTable">
+                  <td>{{row.name}}</td>
+                  <td>{{row.value}}</td>
+                </tr>
+              </table>
+            </details>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('isaset')">
+        <p-column styleClass="ng-table-medium-big-column" field="isaset" header="ISASET" [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <details class="hideOverflow">
+              <summary  *ngIf="result.isasetSummary === ''"><span>&lt;not available&gt;</span></summary>
+              <summary *ngIf="result.isasetSummary != ''"><span>{{result.isasetSummary}}...</span></summary>
+              <table>
+                <tr *ngFor="let row of result.isasetTable">
+                  <td>{{row.name}}</td>
+                  <td>{{row.value}}</td>
+                </tr>
+              </table>
+            </details>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="shouldShowInstructionDetails()">
+        <p-column styleClass="ng-table-medium-column" field="instruction" header="Instructions">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-small-column">
+            <div *ngIf="result.total_instructions!= 0" class="alignCenter">
+              <button type="button" class="btn btn-link" (click)="showDetails(result.traceName)">Details</button>
+            </div>
+            <div *ngIf="result.total_instructions=== 0 || result.total_instructions=== null" class="alignCenter">
+              <p>&lt;not available&gt;</p>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('pathlength')">
+        <p-column styleClass="colWidth" field="pathlength" header="Path Length" [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('segment')">
+        <p-column styleClass="colWidth" field="segment" header="Segment" [sortable]="true">
+
+          <ng-template let-row="rowData" pTemplate type="body">
+            <div class="alignLeft" *ngIf="row.segment == '' || row.segment == '-' || row.segment == null">
+              <p>&lt;not available&gt;</p>
+            </div>
+            <div class="alignLeft" *ngIf="row.segment !== '' && row.segment !== '-' && row.segment !== null">
+              <p>{{row.segment}}</p>
+            </div>
+          </ng-template>
+
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('tags')">
+        <p-column styleClass="colWidth" field="tags" header="Tags" [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('instruction_weight')">
+        <p-column styleClass="colWidth" field="instructionWeight" header="Trace Weight"
+                  [sortable]="true">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.instructionWeight">
+              <div *ngSwitchCase="0">
+                <summary><span>&lt;not available&gt;</span></summary>
+              </div>
+              <div *ngSwitchDefault>
+                <summary><span>{{result.instructionWeight}}</span></summary>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('num_cpus')">
+        <p-column field="num_cpus" header="Number of Threads"
+                  [sortable]="true" styleClass="colWidth">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.num_cpus">
+              <div *ngSwitchCase="0">
+                <summary><span>&lt;not available&gt;</span></summary>
+              </div>
+              <div *ngSwitchDefault>
+                <summary><span>{{result.num_cpus}}</span></summary>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('user_percent')">
+        <p-column field="user_percent" header="User Instructions Ratio(%)"
+                  [sortable]="true" styleClass="colWidth">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.total_instructions">
+              <div *ngSwitchCase="0">
+                <summary><span>&lt;not available&gt;</span></summary>
+              </div>
+              <div *ngSwitchDefault>
+                <summary><span>{{result.user_percent}}</span></summary>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('kernel_percent')">
+        <p-column field="kernel_percent" header="Kernel Instructions Ratio(%)"
+                  [sortable]="true" styleClass="colWidth">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.total_instructions">
+              <div *ngSwitchCase="0">
+                <summary><span>&lt;not available&gt;</span></summary>
+              </div>
+              <div *ngSwitchDefault>
+                <summary><span>{{result.kernel_percent}}</span></summary>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('total_instructions')">
+        <p-column field="total_instructions" header="Total Instructions"
+                  [sortable]="true" styleClass="colWidth">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.total_instructions">
+              <div *ngSwitchCase="0">
+                <summary><span>&lt;not available&gt;</span></summary>
+              </div>
+              <div *ngSwitchDefault>
+                <summary><span>{{result.total_instructions}}</span></summary>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('instructionsrepresented')">
+        <p-column styleClass="colWidth" field="instructionsRepresented" header="Instructions Represented"
+                  [sortable]="true">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.instructionsRepresented">
+              <div *ngSwitchCase="0">
+                <summary><span>&lt;not available&gt;</span></summary>
+              </div>
+              <div *ngSwitchDefault>
+                <summary><span>{{result.instructionsRepresented}}</span></summary>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('cyclesrepresented')">
+        <p-column field="cyclesRepresented" header="Cycles Represented"
+                  [sortable]="true" styleClass="colWidth">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.cyclesRepresented">
+              <div *ngSwitchCase="0">
+                <summary><span>&lt;not available&gt;</span></summary>
+              </div>
+              <div *ngSwitchDefault>
+                <summary><span>{{result.cyclesRepresented}}</span></summary>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('operating_system')">
+        <p-column field="operating_system" header="OS" [sortable]="true"
+                  styleClass="colWidth">
+          <ng-template let-row="rowData" pTemplate type="body">
+            <div class="alignLeft" *ngIf="row.operating_system == '' || row.operating_system == '-' || row.operating_system == null">
+              <p>&lt;not available&gt;</p>
+            </div>
+            <div class="alignLeft" *ngIf="row.operating_system !== '' && row.operating_system !== '-' && row.operating_system !== null">
+              <p>{{row.operating_system}}</p>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('compiler')">
+        <p-column styleClass="colWidth" field="compiler" header="Compiler" [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('invalidfields')">
+        <p-column styleClass="ng-table-medium-big-column" field="invalidfields" header="Invalid Fields"
+                  [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.invalidfields.length">
+              <div *ngSwitchCase="0">
+                <summary><span>&lt;not available&gt;</span></summary>
+              </div>
+              <div *ngSwitchDefault>
+                <details class="hideOverflow">
+                  <summary><span class="btn btn-link">Details</span></summary>
+                  <ul *ngFor="let row of result.invalidfields">
+                    <li>{{row}}</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('ispublished')">
+        <p-column styleClass="colWidth" field="ispublished" header="Is published" [sortable]="true">
+
+          <ng-template let-row="rowData" pTemplate type="body">
+            <div class="alignLeft" *ngIf="row.ispublished == null">
+              <p>&lt;not available&gt;</p>
+            </div>
+            <div class="alignLeft" *ngIf="row.ispublished !== null">
+              <p>{{row.ispublished}}</p>
+            </div>
+          </ng-template>
+
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('ispreproduction')">
+        <p-column styleClass="colWidth" field="ispreproduction" header="Is Preproduction" [sortable]="true">
+
+          <ng-template let-row="rowData" pTemplate type="body">
+            <div class="alignLeft" *ngIf="row.ispreproduction == null">
+              <p>&lt;not available&gt;</p>
+            </div>
+            <div class="alignLeft" *ngIf="row.ispreproduction !== null">
+              <p>{{row.ispreproduction}}</p>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('edp_emon')">
+        <p-column styleClass="ng-table-medium-big-column" field="emonConfigurations" header="EMON/EDP"
+                  [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+
+            <div [ngSwitch]="result.emonConfigurations.length">
+              <div *ngSwitchCase="0"> <p>&lt;not available&gt;</p></div>
+              <div *ngSwitchCase="1">
+                <ul class="listMargin" *ngFor="let row of result.emonConfigurations">
+                  <li class="viewContent btn btn-link" (click)="showEmonEdpWindow(row, result.traceName)">{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchCase="2">
+                <ul class="listMargin" *ngFor="let row of result.emonConfigurations">
+                  <li class="viewContent btn btn-link" (click)="showEmonEdpWindow(row, result.traceName)">{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchDefault>
+                <details class="hideOverflow">
+                  <summary><span class="btn btn-link">Details</span></summary>
+                  <ul class="listMargin" *ngFor="let row of result.emonConfigurations">
+                    <li class="viewContent" (click)="showEmonEdpWindow(row, result.traceName)">{{row}}</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('lcatdata')">
+        <p-column styleClass="colWidth" field="isLcatImpactDisplay" header="LCAT Impact" [sortable]="true">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div *ngIf="result.isLcatImpactDisplay === 'NA'" class="alignCenter">
+              <p>&lt;not available&gt;</p>
+            </div>
+            <div *ngIf="result.isLcatImpactDisplay !== 'NA'" class="alignCenter">
+              <p>{{ result.isLcatImpactDisplay}}</p>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('lcatdata')">
+        <p-column styleClass="colWidth" field="lcatData" header="LCAT Data">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div *ngIf="!result.lcatData" class="alignCenter">
+              <p>&lt;not available&gt;</p>
+            </div>
+            <div *ngIf="result.lcatData" class="alignCenter">
+              <a class="link" (click)="showLcatChartDialog(result.traceName)">LCAT Details</a>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('keiko_cpi')">
+        <p-column styleClass="ng-table-small-column" field="keiko_cpi" header="Keiko CPI"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('emon_cpi')">
+        <p-column styleClass="ng-table-small-column" field="emon_cpi" header="Emon CPI" [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('keiko_l1mpi')">
+        <p-column styleClass="ng-table-small-column" field="keiko_l1mpi" header="Keiko L1 MPI"
+                  [sortable]="true"></p-column>
+      </div>
+
+     <div *ngIf="showColumn('emon_l1mpi')">
+        <p-column styleClass="ng-table-small-column" field="emon_l1mpi" header="Emon L1 MPI"
+                  [sortable]="true"></p-column>
+      </div>
+      <div *ngIf="showColumn('keiko_l2mpi')">
+        <p-column styleClass="ng-table-small-column" field="keiko_l2mpi" header="Keiko L2 MPI"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('emon_l2mpi')">
+        <p-column styleClass="ng-table-small-column" field="emon_l2mpi" header="Emon L2 MPI"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('keiko_llcmpi')">
+        <p-column styleClass="ng-table-small-column" field="keiko_llcmpi" header="Keiko LLCMPI"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('keiko_icache_miss')">
+        <p-column styleClass="ng-table-small-column" field="keiko_icache_miss" header="Keiko ICACHE MISSES"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('keiko_jeclear')">
+        <p-column styleClass="ng-table-small-column" field="keiko_jeclear" header="Keiko JECLEAR"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('emon_llcmpi')">
+        <p-column styleClass="ng-table-small-column" field="emon_llcmpi" header="Emon LLCMPI"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('func_code-footprint-kb')">
+        <p-column styleClass="ng-table-small-column" field="func_code_footprint" header="Code Footprint (kB)"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('func_cpl-trans')">
+        <p-column styleClass="ng-table-small-column" field="func_cpl_trans" header="CPL Transitions"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('func_cr3-trans')">
+        <p-column styleClass="ng-table-small-column" field="func_cr3_trans" header="CR3 Updates"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('func_data-footprint-kb')">
+        <p-column styleClass="ng-table-small-column" field="func_data_footprint" header="Data Footprint (kB)"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('func_irqs')">
+        <p-column styleClass="ng-table-small-column" field="func_irqs" header="IRQS" [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('func_page-faults')">
+        <p-column styleClass="ng-table-small-column" field="func_page_faults" header="Page Faults"
+                  [sortable]="true"></p-column>
+      </div>
+
+      <div *ngIf="showColumn('study_list')">
+        <p-column styleClass="ng-table-medium-big-column" field="studyLists" header="Study Lists" [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.studyLists.length">
+              <div *ngSwitchCase="0"><p>&lt;not available&gt;</p></div>
+              <div *ngSwitchCase="1">
+                <ul class="listMargin" *ngFor="let row of result.studyLists">
+                  <li>{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchCase="2">
+                <ul class="listMargin" *ngFor="let row of result.studyLists">
+                  <li>{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchDefault>
+                <details class="hideOverflow">
+                  <summary><span class="btn btn-link">Details</span></summary>
+                  <ul class="listMargin" *ngFor="let row of result.studyLists">
+                    <li>{{row}}</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('cr3shareddata')">
+        <p-column styleClass="ng-table-medium-big-column" field="cr3SharedData" header="CR3 Shared Data"
+                  [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.cr3SharedData.length">
+              <div *ngSwitchCase="0"><p>&lt;not available&gt;</p></div>
+              <div *ngSwitchCase="1">
+                <ul class="listMargin" *ngFor="let row of result.cr3SharedData">
+                  <li>{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchCase="2">
+                <ul class="listMargin" *ngFor="let row of result.cr3SharedData">
+                  <li>{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchDefault>
+                <details class="hideOverflow">
+                  <summary><span class="btn btn-link">Details</span></summary>
+                  <ul class="listMargin" *ngFor="let row of result.cr3SharedData">
+                    <li>{{row}}</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('lockinstructions')">
+        <p-column styleClass="ng-table-medium-big-column" field="lockInstructions" header="Lock Instructions"
+                  [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.lockInstructions.length">
+              <div *ngSwitchCase="0"><p>&lt;not available&gt;</p></div>
+              <div *ngSwitchCase="1">
+                <ul class="listMargin" *ngFor="let row of result.lockInstructions">
+                  <li>{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchCase="2">
+                <ul class="listMargin" *ngFor="let row of result.lockInstructions">
+                  <li>{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchDefault>
+                <details class="hideOverflow">
+                  <summary><span class="btn btn-link">Details</span></summary>
+                  <ul class="listMargin" *ngFor="let row of result.lockInstructions">
+                    <li>{{row}}</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="showColumn('trace_list')">
+        <p-column styleClass="ng-table-medium2-big-column" field="traceLists" header="Trace Lists" [sortable]="false">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-medium-big-column">
+            <div [ngSwitch]="result.traceLists.length">
+              <div *ngSwitchCase="0"></div>
+              <div *ngSwitchCase="1">
+                <ul class="listMargin" *ngFor="let row of result.traceLists">
+                  <li>{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchCase="2">
+                <ul class="listMargin" *ngFor="let row of result.traceLists">
+                  <li>{{row}}</li>
+                </ul>
+              </div>
+              <div *ngSwitchDefault>
+                <details class="hideOverflow">
+                  <summary><span class="btn btn-link">Details</span></summary>
+                  <ul class="listMargin" *ngFor="let row of result.traceLists">
+                    <li>{{row}}</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+          </ng-template>
+        </p-column>
+      </div>
+
+      <div *ngIf="shouldShowLtFootPrintContent()">
+        <p-column styleClass="ng-table-medium-column" field="ltfootprintcontent" header="Footprint Content">
+          <ng-template let-result="rowData" pTemplate="body" styleClass="ng-table-small-column">
+            <button *ngIf="result.func_data_footprint != '<not available>' && result.func_code_footprint != '<not available>'"
+              type="button" class="viewContent btn btn-link" (click)="showLtFootPrintContent(result.traceName)">View
+              Contents </button>
+            <p *ngIf="result.func_data_footprint === '<not available>' && result.func_code_footprint === '<not available>'" >&lt;not available&gt;</p>
+          </ng-template>
+        </p-column>
+      </div>
+
+    </p-dataTable>
+
+    <p-contextMenu #cm [model]="items"></p-contextMenu>
+  </div>
+</div>
+</div>

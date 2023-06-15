@@ -1,0 +1,6 @@
+.ui-growl {
+    position:absolute;
+    top:35%;
+    left:40%;
+    z-index:50%;
+}

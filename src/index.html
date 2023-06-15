@@ -1,0 +1,30 @@
+<!doctype html>
+<html style="height: 100%">
+<head>
+  <meta charset="utf-8">
+  <title>Architectural Insights Model - PAC Team</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body style="height: 95%">
+<div id="page" style="height: 100%">
+  <app-root>Loading...</app-root>
+</div>
+<script type="text/javascript">
+  var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  if (!isChrome) {
+    document.getElementById("page").innerHTML = "<p>Please open this web page with Google Chrome. The current browser is not supported.</p>";
+  }
+
+  var url = window.location.href;
+  var httpPrefix = "http://";
+  var httpsPrefix = "https://";
+  if (url.indexOf(httpPrefix) > -1 && url.indexOf("localhost") == -1) {
+    var newUrl = url.replace(httpPrefix, httpsPrefix);
+    window.location.replace(newUrl);
+  }
+</script>
+</body>
+</html>

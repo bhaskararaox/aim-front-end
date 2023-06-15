@@ -1,0 +1,44 @@
+<div id="divHeader" class="container-fluid">
+  <header class="header">
+    <div class="row">
+       <div class="col-sm-1 col-xs-1">
+        <div class="logoContainer">
+          <img src="assets/images/intel-logo-white.png" class="logoImg"/>
+        </div>
+      </div>
+      <div class="col-sm- col-xs-3">
+        <!-- <div class="appTitle">IAGS SAS</div>
+        <div *ngIf="dataPublishedDate != null" class="dataDate">Last data refresh date: {{dataPublishedDate}}</div> -->
+      </div>
+      <div class="col-sm-3 col-xs-2 noPadding">
+        <div class="row appTitle center">AIM</div>
+        <div class="row version">Version: {{friendlyVersion}}</div>
+      </div>
+      <div class="col-sm-4 col-xs-5 noPadding">
+        <div class ="row">
+          <div class ="col-sm-6 col-xs-6 selectbutton">
+            <p-selectButton *ngIf="showSwitchUser" [options]="userTypes" [(ngModel)]=user.admin
+                            (ngModelChange)="switchUserView()"></p-selectButton>
+          </div>
+          <div class="col-sm-6 col-xs-6 headerLink noPadding">
+            <div class="row">
+              <a routerLink="/faq">FAQ</a>
+            </div>
+            <div class="row">
+              <a routerLink="" (click)="showFeedbackModal()">Send feedback</a>
+            </div>
+            <div class="row">
+              <a routerLink="/tracesummary">Trace Summary Report</a>
+            </div>
+            <div class="row">
+              <a *ngIf="showSwitchUser && user.admin" routerLink="/report">Usage report</a>
+            </div>
+           </div>
+        </div>
+      </div>
+
+     
+
+    </div>
+  </header>
+</div>

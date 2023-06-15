@@ -1,0 +1,94 @@
+
+<div *ngIf="this.error_code >= 500 || this.error_code == 400" class="error-page error-500 container-fluid h-100">
+  <div class="text-container">
+    <div class="row">
+        <h1 class="col-sm-offset-3 col-sm-9">Houston, we have a problem!</h1>
+    </div>
+    <div class="row">
+        <h4 class="col-sm-offset-3 col-sm-9">An unexpected error occurred or the service is not available.</h4>
+    </div>
+    <div class="row">
+        <h4 class="col-sm-offset-3 col-sm-9">Please wait a few minutes and try again.</h4>
+    </div>
+    <div class="row">
+      <h4 class="col-sm-offset-3 col-sm-9">Click here to go back
+      <a routerLink="/home">Home</a>
+      </h4>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="this.error_code == 401" class="error-page error-401 container-fluid h-100">
+  <div class="text-container">
+    <div class="row">
+        <h1 class="col-sm-offset-2 col-sm-10">Mission Aborted!</h1>
+    </div>
+    <div class="row">
+      <h4 class="col-sm-offset-2 col-sm-10">You don't have access to this application:</h4>
+    </div>
+    <div class="row">
+      <h4 class="col-sm-offset-2 col-sm-10">To request access follow these steps:</h4>
+    </div>
+    <div class="row">
+      <ul class="col-sm-offset-2 col-sm-10">
+        <li>
+          <strong>Go to AGS: <a href="https://ags.intel.com/identityiq/ui/rest/redirect?rp1=/accessRequest/accessRequest.jsf&rp2=accessRequest/manageAccess/add?filterKeyword=BI%20Big%20Data%20-%20Hadoop%20-%20End%20Users%20-%20Production%20-%20Architectural%20Insights%20Model%20-%20PACT%20Read-only">here</a></strong>
+        </li>
+        <li>
+          Select the access <strong>"BI Big Data - Hadoop - End Users - Production - Architectural Insights Model - PACT Read-only"</strong>
+        </li>
+        <li>
+          Click on <strong>"Step 3: Provide Justification"</strong>
+        </li>
+        <li>
+          Add the required justification and click on Save
+        </li>
+        <li>
+          Finally click on Send
+        </li>
+        <li>
+          Once your request is approved, you will receive an email and you are ready to use AIM-PACT
+        </li>
+        <li>
+          The first time you access AIM-PACT you will need to accept the terms for a Privacy Notice
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="this.error_code == 403" class="error-page error-401 container-fluid h-100">
+  <div class="text-container">
+    <div class="row">
+      <h1 class="col-sm-offset-2 col-sm-10">Mission Aborted!</h1>
+    </div>
+    <div class="row">
+      <h4 class="col-sm-offset-2 col-sm-10">You don't have access to this admin feature:</h4>
+    </div>
+    <div class="row">
+      <h4 class="col-sm-offset-2 col-sm-10">To request admin access follow these steps:</h4>
+    </div>
+    <div class="row">
+      <ul class="col-sm-offset-2 col-sm-10">
+        <li>
+          <strong>Go to AGS: <a href="https://ags.intel.com/identityiq/ui/rest/redirect?rp1=/accessRequest/accessRequest.jsf&rp2=accessRequest/manageAccess/add?filterKeyword=AIM-PACT%20-%20Production%20-%20Admin%20User">here</a></strong>
+        </li>
+        <li>
+          Select the access <strong>"AIM-PACT - Production - Admin User"</strong>
+        </li>
+        <li>
+          Click on <strong>"Step 3: Provide Justification"</strong>
+        </li>
+        <li>
+          Add the required justification and click on Save
+        </li>
+        <li>
+          Finally click on Send
+        </li>
+        <li>
+          You will receive an email once your request to be an admin user is approved
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

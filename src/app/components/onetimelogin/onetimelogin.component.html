@@ -1,0 +1,51 @@
+<div id="oneTimeLoginContainer">
+  <form>
+    <label for="username">User ID:</label>
+    <input type="text" id="username" placeholder="AMR\idsid" name="usernameInput" [(ngModel)]="username">
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="********" name="passwordInput" [(ngModel)]="password">
+    <p id="userAuthenticationFailLabel" class="failLabel" *ngIf="userAuthenticationFail">User ID and/or Password incorrect.</p>
+    <input type="checkbox" title="Please proceed to click the Privacy and Terms of Use first." [disabled]="!acceptBox" [(ngModel)]="acceptBox" [ngModelOptions]="{standalone: true}" (change)="changeAcceptBox(acceptBox)"><a id="showPrivacyNoticeLabel" (click)="showPrivacyNotice(true)">Privacy and Terms of Use</a>
+    <button class="btn btn-primary" title="Please proceed to click the Privacy and Terms of Use first." id="loginBtn" type="button" [disabled]="submitBotton" (click)="loginAction()">Login</button>
+  </form>
+</div>
+
+<p-dialog id="oneTimeLoginDialog"  modal="modal" header="AIM-PACT tool Privacy Notice"[(visible)]="showModal" width="800" minlength="800" [minHeight]="400">
+
+  <div class="scroll-bar scrollSize">
+
+    <h4><strong>Privacy Notice</strong></h4>
+    <div class="contentPrivacyNotice">
+      This privacy notice discloses the privacy practices for AIM-PACT tool.
+      <h4><strong>Information collection and use</strong></h4>
+      By completing this agreement your user ID will be used only for the purpose of:<br>
+      <ul>
+        <li>Accessing the site.</li>
+        <li>Having a tool usage log that stores the queries made by you and the date these were made.</li>
+        <li>Customizing the tool to save your favorite queries.</li>
+        <li>For tool owners to learn the queries being run.</li>
+      </ul>
+      <h4><strong>Persistence of information</strong></h4>
+      We retain your tool usage information for a maximum of three years with the objective to compare usage trends.
+      <h4><strong>Information sharing</strong></h4>
+      We do not disclose personal information with any third parties.
+      <h4><strong>Your consent</strong></h4>
+      Please select "Yes, sign me up" checkbox below if you grant tool owners permission to send you emails about product updates that we believe would be of interest to you, also if you sign up, you can unsubscribe at any time.<br><br>
+      To learn more about Intel's privacy practices, please visit <a href="http://www.intel.com/privacy" id="privacyURL" target="_blank">http://www.intel.com/privacy</a>
+    </div>
+    <h4><strong>Terms of Use</strong></h4>
+    <p class="contentPrivacyNotice">AIM-PACT is an internal to Intel tool from SSG/STO/PAC/Tracing. It is a search engine for traces and simulation data in GTR (Global Trace Repository).<br>
+      The data should be treated as Intel Top Secret, and sufficient and appropriate measures should be taken to secure the information downloaded from AIM-PACT.<br>
+    </p>
+    <p class="contentPrivacyNotice">Access to the tool will be restricted and shared with Intel Blue Badge Employees with a relevant need to know.</p>
+
+    <p-footer>
+      <div id="footerContainer">
+        <input id="checkBoxInput" type="checkbox" name="signMe" [(ngModel)]="signMeBox" [ngModelOptions]="{standalone: true}" (change)="changeSignMeBox(signMeBox)">
+        <label id="signMeLabel" class="footerElements" for="checkBoxInput">Yes, sign me up</label>
+        <button (click)="acceptTerms()" class="footerElements">Accept</button>
+        <button (click)="showPrivacyNotice(false)">Cancel</button>
+      </div>
+    </p-footer>
+  </div>
+</p-dialog>

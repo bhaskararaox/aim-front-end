@@ -1,0 +1,117 @@
+<section id="secCustomEmonCharts">
+  <div class="dataContent">
+    <p-panel header="Select the desire EDP  Sample/Timestamp Configuration">
+
+      <table>
+        <tr>
+          <td style="text-align: left; width: 100%;">
+            <strong>Trace name:</strong> {{traceName}}
+            <br>
+            <strong>Configuration name: </strong>{{configurationName}}
+            <br>
+          </td>
+          <td style="text-align: right; vertical-align: top; padding-top: 10px; padding-right: 50px;">
+            <button (click)="sendMessageToParent()" class="btn btn-primary">Back to Search Results</button>
+          </td>
+        </tr>
+      </table>
+
+      <div class="container">
+
+        <p-growl [value]="messages" life="5000"></p-growl>
+        <table class="table">
+          <tbody>
+          <th>Sample/Timestamp</th>
+          <th></th>
+          <th>Metrics</th>
+          <th></th>
+          <th>Sockets</th>
+          <th></th>
+          <th>Cores</th>
+          <th></th>
+          <th>Package</th>
+          </tbody>
+
+          <tr></tr>
+          <tr>
+            <td>
+              <p-dropdown [options]="sampleTimeStamp" [(ngModel)]="selectedSampleTimeStamp" [style]="{'width':'250px'}"
+                          (onChange)="onSampleTimeStampChange($event)"></p-dropdown>
+            </td>
+            <td></td>
+            <td [hidden]="trendLine == true">
+              <p-multiSelect [options]="metrics" [(ngModel)]="selectedMetrics"></p-multiSelect>
+            </td>
+
+            <td [hidden]="trendLine == false">
+              <p-dropdown [options]="metricTrendLine" [(ngModel)]="selectedMetricsTrendLine"
+                          [style]="{'width':'350px'}"></p-dropdown>
+            </td>
+            <td></td>
+            <td>
+              <p-dropdown [options]="sockets" [(ngModel)]="selectedSockets" [style]="{'width':'150px'}"></p-dropdown>
+            </td>
+            <td></td>
+            <td>
+              <p-dropdown [options]="cores" [(ngModel)]="selectedCores" [style]="{'width':'150px'}"></p-dropdown>
+            <td>
+            <td>
+              <p-dropdown [options]="package" [(ngModel)]="selectedPackage" [style]="{'width':'150px'}"></p-dropdown>
+            </td>
+          </tr>
+
+          <tr *ngIf="trendLine ===false">
+            <td><strong> X axis</strong></td>
+            <td></td>
+            <td><strong>Y axis</strong></td>
+            <td colspan="6"></td>
+          </tr>
+
+          <tr *ngIf="trendLine ===true">
+            <td><strong> Y axis</strong></td>
+            <td></td>
+            <td><strong>X axis</strong></td>
+            <td colspan="6"></td>
+          </tr>
+
+
+          <tr>
+            <td colspan="9"></td>
+          </tr>
+        </table>
+        <div align="left">
+          <button (click)="addCharts()" class="btn btn-success">Add Chart</button>
+          <button (click)="deleteAllCharts()" class="btn btn-danger">Delete Charts</button>
+        </div>
+      </div>
+
+    </p-panel>
+  </div>
+  <div class="container">
+    <table class="table">
+      <tbody>
+      <tr *ngFor="let chartObj of chartData; let i=index">
+        <td>
+          <div class="divTableCell">
+            <app-googlecharts [data]="chartObj.data" [config]="chartObj.config" [elementId]="chartObj.elementId"
+                              [chartSelection]="chartObj.config.chartType">
+            </app-googlecharts>
+          </div>
+          <!--The Div that will hold the pie chart, will come from the Google Charts-->
+        </td>
+        <td>
+          <button (click)="getRemove(chartObj.elementId)" class="btn btn-danger btn-query-builder">
+            <img width="20" height="20" style="horiz-align: center; vertical-align: center"
+                 src="assets/images/remove.png" title="Remove"/>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+
+
+

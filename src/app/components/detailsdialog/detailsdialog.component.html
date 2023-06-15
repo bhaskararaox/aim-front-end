@@ -1,0 +1,89 @@
+<div id="divDetailsDialog" class="container-fluid details-dialog">
+  <div class="row details-header">
+    <div class="col-sm-6">
+      <span class="contentTitle">Instructions</span>
+    </div>
+    <div class="col-sm-6">
+      <button (click)="dialog.close()" class="btn btn-danger close-button">Close Window</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row details-content">
+    <div class="nav nav-pills nav-stacked col-sm-6" *ngIf="dialog.context.trace.instructions != null">
+      <div class="contentSubTitle">List of instructions:</div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Instruction</th>
+          <th>Frequency</th>
+          <th>Percentage</th>
+        </tr>
+        </thead>
+
+        <ng-container *ngIf="instructionTable.length>0">
+          <tr *ngFor="let row of instructionTable">
+            <td *ngIf="row.Instruction !==''">{{row.Instruction}}</td>
+            <td *ngIf="row.frequency   !== null">{{row.frequency}}</td>
+            <td *ngIf="row.Instruction !==''">{{row.percentage}}</td>
+          </tr>
+        </ng-container>
+
+        <ng-container *ngIf="instructionTable.length===0">
+          <tr>
+            <td>&lt;not available&gt;</td>
+            <td>&lt;not available&gt;</td>
+            <td>&lt;not available&gt;</td>
+          </tr>
+        </ng-container>
+
+      </table>
+    </div>
+    <div class="nav nav-pills nav-stacked col-sm-6">
+
+      <div *ngIf="showHighlight()">
+        <span class="contentSubTitle">Sequence example:</span>
+        <br>
+        <div innerHTML="{{dialog.context.highlight}}"></div>
+      </div>
+
+      <div>
+        <div>
+          <div class="col-sm-4 contentSubTitle noPadding">XED indicator: </div>
+          <div class="col-sm-4">
+            <select class="form-control" [(ngModel)]="xedMetric" (ngModelChange)="getXEDMetricTable()">
+              <option>ISA Extension</option>
+              <option>ISA Set</option>
+              <option>Category</option>
+              <option>IForm</option>
+            </select>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th>{{xedMetric}}</th>
+            <th>Percentage</th>
+          </tr>
+          </thead>
+
+          <ng-container *ngIf="xedTable.length>0">
+            <tr *ngFor="let row of xedTable">
+              <td>{{row.name}}</td>
+              <td>{{row.value}}</td>
+            </tr>
+          </ng-container>
+
+          <ng-container *ngIf="xedTable.length===0">
+            <tr>
+              <td>&lt;not available&gt;</td>
+              <td>&lt;not available&gt;</td>
+            </tr>
+          </ng-container>
+
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

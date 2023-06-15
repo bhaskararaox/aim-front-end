@@ -1,0 +1,22 @@
+#divFeedbackForm .close{
+  font-size: 35px;
+}
+
+#divFeedbackForm .form-group{
+  padding: 10px;
+}
+
+#divFeedbackForm .input-group-addon {
+  color: #186ba0 !important;
+}
+
+#divFeedbackForm textarea {
+  white-space: pre-line;
+}
+
+#divFeedbackForm .text{
+  font-family: "Intel Clear","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #575757;
+  font-size: 15px;
+  font-weight: normal;
+}

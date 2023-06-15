@@ -1,0 +1,37 @@
+h2 {
+  font-family: "Intel Clear","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #003C71;
+  font-size: 33px;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 25px;
+}
+
+.backbutton{
+  text-align: center;
+  margin-top: 30px;
+}
+
+table.border, table.border th, table.border td {
+  padding: 4px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.side-bar-col{
+  padding-left: 0px;
+  height: 100%;
+}
+
+.sidebar{
+  top: 70px;
+  padding: 20px 10px 10px;
+  background: white;
+  height: 89.4%;
+}
+
+.ui-growl {
+  top:35%;
+  left:40%;
+  z-index:auto;
+}

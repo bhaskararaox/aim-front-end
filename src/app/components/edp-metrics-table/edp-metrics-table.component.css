@@ -1,0 +1,27 @@
+#secEDPMetricsTable #divChart{
+  height: 800px;
+}
+
+#secEDPMetricsTable #divMetricsTable{
+  margin-top: 2%;
+}
+
+#secEDPMetricsTable #btnUpdateTable{
+  margin-left: 0.938em;
+}
+
+#secEDPMetricsTable #divNoData h2{
+  text-align: center;
+  font-size: x-large;
+  color: #a94442;
+}
+
+#secEDPMetricsTable .metric_col{
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+}
+
+#secEDPMetricsTable .viewContent {
+  white-space: normal;
+}

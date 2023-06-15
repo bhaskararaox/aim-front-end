@@ -1,0 +1,279 @@
+.page{
+  height: 100%;
+  min-width: 1000px;
+}
+
+.searchBox {
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.pythonQuery {
+  margin: 5px;
+  min-height: 20px;
+  max-height: 90px;
+  width: available;
+  overflow: auto;
+}
+
+.noPadding{
+  padding: 0px !important;
+}
+
+.contentTitle{
+  font-family: "Intel Clear","Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #003C71;
+  font-size: 30px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.contentSubTitle {
+  vertical-align: middle;
+  font-size: large;
+  color: #003C71;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.dataContent {
+  margin-top: 20px;
+  margin-left: 80px;
+}
+
+.count {
+  margin-top: 10px;
+  vertical-align: middle;
+  display: inline-block;
+  font-size: x-large;
+  color: #003C71;
+  font-weight: bold;
+}
+
+.searchTable {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.searchTable table {
+  width: 100%;
+}
+
+.searchTable table th {
+  font-weight: 600;
+}
+
+.searchTable table td {
+  text-align: left;
+  padding-right: 20px;
+  padding-top: 5px;
+}
+
+.searchQueryField.error {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #FF6666;
+}
+
+.searchQueryField {
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: top
+}
+
+.availableFields {
+  width: 90%;
+  font-size: small;
+  font-weight: lighter;
+}
+
+.availableFields table {
+  width: 98%;
+  font-size: small;
+  font-weight: lighter;
+}
+
+.availableFields ul {
+  list-style: none;
+  display: inline;
+}
+
+.availableFields ul li {
+  display: inline;
+  margin: -15px;
+}
+
+.ui-blockui{
+  background: #fff !important;
+  opacity: 0.5 !important;
+}
+
+#spinImage{
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+#spinImage2{
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.ng-table-small-column {
+  width: 80px;
+}
+
+.ng-table-medium-column {
+  width: 100px;
+}
+
+.ng-table-medium-big-column {
+  width: 200px;
+}
+
+.ng-table-medium2-big-column {
+  width: 300px;
+}
+
+.ng-table-big-column {
+  width: 600px;
+}
+
+.spinner {
+  z-index: 99999;
+}
+
+.details-dialog {
+  margin: 15px;
+}
+
+.details-dialog .details-content {
+  max-height: 500px;
+  overflow: auto;
+  font-size: small;
+}
+
+.details-dialog .close-button {
+  display: inline-block;
+  float: right;
+  text-align: right;
+}
+
+.table {
+  width: 100%;
+  height: 100%;
+}
+
+.row {
+  min-height: 1px;
+  height: auto;
+  margin: 0;
+}
+
+.cell {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.footer {
+  height: 40px;
+  opacity: 0.6;
+  padding-top: 5px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  background-color: red;
+  color: #fff;
+  font-size: x-large;
+  font-weight: bold;
+  width: 100%;
+}
+
+.modal-dialog {
+  width: 1200px;
+}
+
+.data-toggle-link{
+  color: red !important;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+.tempSummary {
+  outline: none;
+}
+
+.btn-menu {
+  background-color: white;
+  color: #204d74;
+  border-color: white;
+  height: 36px;
+  width: 36px;
+  padding: 0px 0px;
+  font-size: 8px
+}
+
+.h-100 {
+  height: calc(100vh - 120px);
+  overflow-y: hidden;
+}
+
+.centerText{
+  text-align: center;
+}
+
+.breaktext{
+  white-space: normal;
+  word-break: break-all;
+}
+
+.ui-datatable tbody > tr.ui-widget-content.ui-state-highlight {
+  background-color: #cedceb;
+  color: #212121;
+  font-weight: bold;
+}
+
+.ui-datatable th.ui-state-active {
+  background: #d3d5d8;
+  border-color: #d9d9d9;
+}
+
+table tbody .ui-state-highlight, .ui-widget-content.ui-state-highlight, .ui-widget-header.ui-state-highlight {
+  background: #cedceb !important;
+  color: #212121 !important;
+  font-weight: bold !important;
+}
+
+.ui-growl .ui-state-highlight {
+  color: #fff !important;
+}
+
+.no-margin{
+  margin:0;
+}
+
+.no-bullets-list {
+  list-style: none;
+}
+
+.output-fields-headers {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#searchBox li label {
+  font-size: 12px;
+  font-weight: normal;
+}

@@ -1,0 +1,75 @@
+#divHelp{
+  margin-bottom: 45px;
+}
+
+#divHelp .video{
+  text-align: center;
+}
+
+#divHelp .toolVideo{
+  width:70%;
+  height: auto;
+}
+
+#divHelp p-accordiontab .ui-state-default a {
+  color: #003C71 !important;
+  font-weight: bold;
+}
+
+#divHelp p-accordiontab div.ui-accordion-content a {
+  color: #2a6a99;
+}
+
+#divHelp p-accordiontab div.ui-accordion-header {
+  border-radius: 5px;
+  margin-top: 5px !important;
+}
+
+#divHelp p-accordiontab div.ui-accordion-content {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+#divHelp p-accordiontab div.ui-accordion-header {
+  color: #003C71 !important;
+  font-size: medium;
+}
+
+#divHelp p-accordiontab div.ui-accordion-header.ui-state-active {
+  background-image: none;
+  background-color: #dedede !important;
+}
+
+#divHelp .sourcesTable {
+  width: 90%;
+  margin: 0 auto;
+}
+
+#divHelp .sourcesTable th {
+  font-weight: 600;
+  padding: 6px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+#divHelp .sourcesTable td {
+  padding: 6px;
+  border: 1px solid black;
+  text-align: left;
+}
+
+#divHelp .innerTable th, #divHelp .innerTable td {
+  border: none;
+  padding: 1px 5px;
+  text-align: center;
+  margin-left: 5%;
+}
+
+#divHelp .backbutton{
+  text-align: center;
+  margin-top: 30px;
+}
+

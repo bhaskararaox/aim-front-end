@@ -1,0 +1,13 @@
+#divLcatChartDialog .lcat-chart{
+  height: 600px;
+}
+
+#divLcatChartDialog {
+  height: 700px;
+}
+
+.lcat-details-content {
+  overflow: hidden;
+  max-height: none;
+  font-size: small;
+}

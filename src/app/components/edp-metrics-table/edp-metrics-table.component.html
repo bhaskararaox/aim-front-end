@@ -1,0 +1,56 @@
+<section id="secEDPMetricsTable" class="container-fluid">
+  <div class="row">
+    <form>
+      <div class="form-row">
+        <div class="form-group col-sm-4">
+          <label for="inputCores">Cores</label>
+          <p-dropdown [options]="cores" [(ngModel)]="selectedCore" [style]="{'width':'100%'}" id="inputCores" name="inputCores"></p-dropdown>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="inputSockets">Sockets</label>
+          <p-dropdown [options]="sockets" [(ngModel)]="selectedSocket" [style]="{'width':'100%'}" id="inputSockets" name="inputSockets"></p-dropdown>
+        </div>
+        <div class="form-group col-sm-4">
+          <label for="inputPackages">Packages</label>
+          <p-dropdown [options]="packages" [(ngModel)]="selectedPackage" [style]="{'width':'100%'}" id="inputPackages" name="inputPackages"></p-dropdown>
+        </div>
+        <button id="btnUpdateTable" (click)="updateTable()" [disabled]="!hasSelectedData()" class="btn btn-success">Update Table</button>
+      </div>
+    </form>
+  </div>
+  <div id="divNoData" *ngIf="!tableHasData" class="row">
+    <h2>I'm sorry, we couldn't find any correlation data with these parameters.</h2>
+    <h2>Please try another configuration.</h2>
+  </div>
+  <div *ngIf="tableHasData" class="row">
+    <div id="divMetricsTable" class="col-sm-6">
+      <label>Metrics correlated against CPI</label>
+      <p-dataTable #dtMetrics [value]="tableElements" [responsive]="true" [rows]="10" [paginator]="true" >
+        <p-column styleClass="metric_col ng-table-medium-column" field="metricColValue" header="Metric" [filter]="true" filterMatchMode="contains"></p-column>
+        <p-column styleClass="ng-table-small-column" field="rsquaredColValue" header="Linear Regression R^2"></p-column>
+        <p-column styleClass="ng-table-small-column" field="pearsonColValue" header="Correlation"></p-column>
+        <p-column styleClass="ng-table-small-column" field="frequencyColValue" header="Frequency (x / delta TSC)"></p-column>
+        <p-column styleClass="ng-table-medium-column" header="ScatterPlot">
+          <ng-template let-selectedMetric="rowData" pTemplate="body">
+            <button type="button" class="viewContent btn btn-link" (click)="displayScatterPlot(selectedMetric.metricColValue)">
+              View ScatterPlot
+            </button>
+          </ng-template>
+        </p-column>
+        <p-column styleClass="ng-table-medium-column" header="TimePlot">
+          <ng-template let-selectedMetric="rowData" pTemplate="body">
+            <button type="button" class="viewContent btn btn-link" (click)="displayTimePlot(selectedMetric.metricColValue)">
+              View TimePlot
+            </button>
+          </ng-template>
+        </p-column>
+      </p-dataTable>
+    </div>
+    <div class="col-sm-6">
+      <div *ngFor="let chart of chartList; let i=index"  id="divChart">
+        <app-googlecharts [data]="chart.data" [config]="chart.config" [elementId]="chart.elementId" [chartSelection]="chart.config.chartType">
+        </app-googlecharts>
+      </div>
+    </div>
+  </div>
+</section>

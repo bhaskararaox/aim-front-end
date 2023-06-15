@@ -1,0 +1,39 @@
+#divDatagrid .pythonExporter{
+  width: 100%;
+  background-color: yellow;
+}
+#divDatagrid .dataTable{
+  overflow: auto;
+  border: 1px solid #ddd;
+}
+
+#divDatagrid p-datatable{
+  float: left;
+}
+
+#divDatagrid .colWidth{
+  width: 120px;
+}
+
+#divDatagrid .viewContent {
+  white-space: normal;
+  word-break: break-word;
+}
+
+#divDatagrid .hideOverflow{
+  overflow: hidden;
+}
+
+#divDatagrid .listMargin{
+  margin-bottom:0px;
+  padding-left: 15px;
+}
+
+#divDatagrid .link{
+  text-decoration: underline;
+  color: #0073ea;
+}
+
+#divDatagrid .alignCenter{
+  text-align: center;
+}

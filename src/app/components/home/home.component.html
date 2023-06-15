@@ -1,0 +1,44 @@
+<!--<traceanalytics-header *ngIf="!showFirstLogin"></traceanalytics-header>-->
+
+<!--<div>
+  <app-onetimelogin *ngIf="showFirstLogin" (updateFirstLogin)="setFirstLogin($event)"></app-onetimelogin>
+</div>-->
+
+<div id="divHome" class="container-fluid">
+
+  <!--<edp-dashboard [hidden]="!showEDPPlots"></edp-dashboard>-->
+
+  <div class="row content">
+
+    <div id="navLeft">
+      <div class="navLeft-btn" (click)="toggleLeftPane()">
+        <img src="assets/images/collapse_left.png" id="navLeftImage"/>
+      </div>
+
+      <searchbox></searchbox>
+
+    </div>
+
+    <div class="col dataContent" [hidden]="showEDPPlots">
+      <div class="row">
+        <div class="col-sm-8 noPadding">
+          <label class="contentTitle"><b>Search Results:&nbsp;</b></label>
+          <label *ngIf="workloadCount != null" class="detailedSearchResults">Workloads: <b>{{workloadCount}}</b>, </label>
+          <label *ngIf="componentCount != null" class="detailedSearchResults">Components: <b>{{componentCount}}</b>, </label>
+          <label *ngIf="traceCount != null" class="detailedSearchResults">Traces: <b>{{traceCount}}</b></label>
+        </div>
+      </div>
+
+      <dashboard></dashboard>
+
+      <div class="row exportButtons">
+          <button type="button" class="btn btn-primary" ng-model="radioModel" uib-uncheckable="uncheckable" title="{{resultsAvailable? '' : 'No search results available to export'}}" [disabled]="!resultsAvailable" (click)="exportResults()">Export Search Results</button>
+          <button type="button" class="btn btn-primary" ng-model="radioModel" uib-uncheckable="uncheckable" title="{{resultsAvailable? '' : 'No trace lists available to export'}}" [disabled]="!resultsAvailable" (click)="exportTlist()">Export Trace List</button>
+      </div>
+
+      <datagrid></datagrid>
+      
+    </div>
+
+  </div>
+</div>
